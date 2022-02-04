@@ -1,0 +1,49 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="JSHint" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="34">
+            <item index="0" class="java.lang.String" itemvalue="mysqlclient" />
+            <item index="1" class="java.lang.String" itemvalue="diff-match-patch" />
+            <item index="2" class="java.lang.String" itemvalue="django-ckeditor" />
+            <item index="3" class="java.lang.String" itemvalue="django-daterangefilter" />
+            <item index="4" class="java.lang.String" itemvalue="PyYAML" />
+            <item index="5" class="java.lang.String" itemvalue="defusedxml" />
+            <item index="6" class="java.lang.String" itemvalue="sorl-thumbnail" />
+            <item index="7" class="java.lang.String" itemvalue="django-nested-admin" />
+            <item index="8" class="java.lang.String" itemvalue="redis" />
+            <item index="9" class="java.lang.String" itemvalue="sqlparse" />
+            <item index="10" class="java.lang.String" itemvalue="jdcal" />
+            <item index="11" class="java.lang.String" itemvalue="django-suit" />
+            <item index="12" class="java.lang.String" itemvalue="django-model-utils" />
+            <item index="13" class="java.lang.String" itemvalue="xlrd" />
+            <item index="14" class="java.lang.String" itemvalue="swapper" />
+            <item index="15" class="java.lang.String" itemvalue="six" />
+            <item index="16" class="java.lang.String" itemvalue="tablib" />
+            <item index="17" class="java.lang.String" itemvalue="django-import-export" />
+            <item index="18" class="java.lang.String" itemvalue="django-select2" />
+            <item index="19" class="java.lang.String" itemvalue="asgiref" />
+            <item index="20" class="java.lang.String" itemvalue="xlwt" />
+            <item index="21" class="java.lang.String" itemvalue="django-appconf" />
+            <item index="22" class="java.lang.String" itemvalue="et-xmlfile" />
+            <item index="23" class="java.lang.String" itemvalue="MarkupPy" />
+            <item index="24" class="java.lang.String" itemvalue="django-admin-list-filter-dropdown" />
+            <item index="25" class="java.lang.String" itemvalue="tqdm" />
+            <item index="26" class="java.lang.String" itemvalue="odfpy" />
+            <item index="27" class="java.lang.String" itemvalue="python-monkey-business" />
+            <item index="28" class="java.lang.String" itemvalue="Django" />
+            <item index="29" class="java.lang.String" itemvalue="django-colorfield" />
+            <item index="30" class="java.lang.String" itemvalue="django-js-asset" />
+            <item index="31" class="java.lang.String" itemvalue="pytz" />
+            <item index="32" class="java.lang.String" itemvalue="openpyxl" />
+            <item index="33" class="java.lang.String" itemvalue="Pillow" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
