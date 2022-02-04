@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+import { NgbDatepickerConfig } from './datepicker-config';
+import * as i0 from "@angular/core";
+/**
+ * A configuration service for the [`NgbDatepickerInput`](#/components/datepicker/api#NgbDatepicker) component.
+ *
+ * You can inject this service, typically in your root component, and customize the values of its properties in
+ * order to provide default values for all the datepicker inputs used in the application.
+ *
+ * @since 5.2.0
+ */
+export class NgbInputDatepickerConfig extends NgbDatepickerConfig {
+    constructor() {
+        super(...arguments);
+        this.autoClose = true;
+        this.placement = ['bottom-left', 'bottom-right', 'top-left', 'top-right'];
+        this.restoreFocus = true;
+    }
+}
+NgbInputDatepickerConfig.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbInputDatepickerConfig, deps: null, target: i0.ɵɵFactoryTarget.Injectable });
+NgbInputDatepickerConfig.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbInputDatepickerConfig, providedIn: 'root' });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbInputDatepickerConfig, decorators: [{
+            type: Injectable,
+            args: [{ providedIn: 'root' }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGF0ZXBpY2tlci1pbnB1dC1jb25maWcuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvZGF0ZXBpY2tlci9kYXRlcGlja2VyLWlucHV0LWNvbmZpZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUMsVUFBVSxFQUFDLE1BQU0sZUFBZSxDQUFDO0FBRXpDLE9BQU8sRUFBQyxtQkFBbUIsRUFBQyxNQUFNLHFCQUFxQixDQUFDOztBQUd4RDs7Ozs7OztHQU9HO0FBRUgsTUFBTSxPQUFPLHdCQUF5QixTQUFRLG1CQUFtQjtJQURqRTs7UUFFRSxjQUFTLEdBQW1DLElBQUksQ0FBQztRQUdqRCxjQUFTLEdBQW1CLENBQUMsYUFBYSxFQUFFLGNBQWMsRUFBRSxVQUFVLEVBQUUsV0FBVyxDQUFDLENBQUM7UUFDckYsaUJBQVksR0FBZ0MsSUFBSSxDQUFDO0tBQ2xEOztxSEFOWSx3QkFBd0I7eUhBQXhCLHdCQUF3QixjQURaLE1BQU07MkZBQ2xCLHdCQUF3QjtrQkFEcEMsVUFBVTttQkFBQyxFQUFDLFVBQVUsRUFBRSxNQUFNLEVBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge0luamVjdGFibGV9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5cclxuaW1wb3J0IHtOZ2JEYXRlcGlja2VyQ29uZmlnfSBmcm9tICcuL2RhdGVwaWNrZXItY29uZmlnJztcclxuaW1wb3J0IHtQbGFjZW1lbnRBcnJheX0gZnJvbSAnLi4vdXRpbC9wb3NpdGlvbmluZyc7XHJcblxyXG4vKipcclxuICogQSBjb25maWd1cmF0aW9uIHNlcnZpY2UgZm9yIHRoZSBbYE5nYkRhdGVwaWNrZXJJbnB1dGBdKCMvY29tcG9uZW50cy9kYXRlcGlja2VyL2FwaSNOZ2JEYXRlcGlja2VyKSBjb21wb25lbnQuXHJcbiAqXHJcbiAqIFlvdSBjYW4gaW5qZWN0IHRoaXMgc2VydmljZSwgdHlwaWNhbGx5IGluIHlvdXIgcm9vdCBjb21wb25lbnQsIGFuZCBjdXN0b21pemUgdGhlIHZhbHVlcyBvZiBpdHMgcHJvcGVydGllcyBpblxyXG4gKiBvcmRlciB0byBwcm92aWRlIGRlZmF1bHQgdmFsdWVzIGZvciBhbGwgdGhlIGRhdGVwaWNrZXIgaW5wdXRzIHVzZWQgaW4gdGhlIGFwcGxpY2F0aW9uLlxyXG4gKlxyXG4gKiBAc2luY2UgNS4yLjBcclxuICovXHJcbkBJbmplY3RhYmxlKHtwcm92aWRlZEluOiAncm9vdCd9KVxyXG5leHBvcnQgY2xhc3MgTmdiSW5wdXREYXRlcGlja2VyQ29uZmlnIGV4dGVuZHMgTmdiRGF0ZXBpY2tlckNvbmZpZyB7XHJcbiAgYXV0b0Nsb3NlOiBib29sZWFuIHwgJ2luc2lkZScgfCAnb3V0c2lkZScgPSB0cnVlO1xyXG4gIGNvbnRhaW5lcjogbnVsbCB8ICdib2R5JztcclxuICBwb3NpdGlvblRhcmdldDogc3RyaW5nIHwgSFRNTEVsZW1lbnQ7XHJcbiAgcGxhY2VtZW50OiBQbGFjZW1lbnRBcnJheSA9IFsnYm90dG9tLWxlZnQnLCAnYm90dG9tLXJpZ2h0JywgJ3RvcC1sZWZ0JywgJ3RvcC1yaWdodCddO1xyXG4gIHJlc3RvcmVGb2N1czogdHJ1ZSB8IEhUTUxFbGVtZW50IHwgc3RyaW5nID0gdHJ1ZTtcclxufVxyXG4iXX0=

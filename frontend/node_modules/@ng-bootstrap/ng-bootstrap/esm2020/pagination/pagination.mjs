@@ -1,0 +1,449 @@
+import { Component, ContentChild, Directive, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { getValueInRange, isNumber } from '../util/util';
+import * as i0 from "@angular/core";
+import * as i1 from "./pagination-config";
+import * as i2 from "@angular/common";
+/**
+ * A directive to match the 'ellipsis' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationEllipsis {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationEllipsis.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationEllipsis, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationEllipsis.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationEllipsis, selector: "ng-template[ngbPaginationEllipsis]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationEllipsis, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationEllipsis]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the 'first' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationFirst {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationFirst.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationFirst, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationFirst.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationFirst, selector: "ng-template[ngbPaginationFirst]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationFirst, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationFirst]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the 'last' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationLast {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationLast.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationLast, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationLast.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationLast, selector: "ng-template[ngbPaginationLast]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationLast, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationLast]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the 'next' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationNext {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationNext.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationNext, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationNext.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationNext, selector: "ng-template[ngbPaginationNext]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationNext, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationNext]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the page 'number' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationNumber {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationNumber.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationNumber, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationNumber.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationNumber, selector: "ng-template[ngbPaginationNumber]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationNumber, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationNumber]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the 'previous' link template
+ *
+ * @since 4.1.0
+ */
+export class NgbPaginationPrevious {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationPrevious.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationPrevious, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationPrevious.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationPrevious, selector: "ng-template[ngbPaginationPrevious]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationPrevious, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationPrevious]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A directive to match the 'pages' whole content
+ *
+ * @since 9.1.0
+ */
+export class NgbPaginationPages {
+    constructor(templateRef) {
+        this.templateRef = templateRef;
+    }
+}
+NgbPaginationPages.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationPages, deps: [{ token: i0.TemplateRef }], target: i0.ɵɵFactoryTarget.Directive });
+NgbPaginationPages.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.0.3", type: NgbPaginationPages, selector: "ng-template[ngbPaginationPages]", ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPaginationPages, decorators: [{
+            type: Directive,
+            args: [{ selector: 'ng-template[ngbPaginationPages]' }]
+        }], ctorParameters: function () { return [{ type: i0.TemplateRef }]; } });
+/**
+ * A component that displays page numbers and allows to customize them in several ways.
+ */
+export class NgbPagination {
+    constructor(config) {
+        this.pageCount = 0;
+        this.pages = [];
+        /**
+         *  The current page.
+         *
+         *  Page numbers start with `1`.
+         */
+        this.page = 1;
+        /**
+         *  An event fired when the page is changed. Will fire only if collection size is set and all values are valid.
+         *
+         *  Event payload is the number of the newly selected page.
+         *
+         *  Page numbers start with `1`.
+         */
+        this.pageChange = new EventEmitter(true);
+        this.disabled = config.disabled;
+        this.boundaryLinks = config.boundaryLinks;
+        this.directionLinks = config.directionLinks;
+        this.ellipses = config.ellipses;
+        this.maxSize = config.maxSize;
+        this.pageSize = config.pageSize;
+        this.rotate = config.rotate;
+        this.size = config.size;
+    }
+    hasPrevious() { return this.page > 1; }
+    hasNext() { return this.page < this.pageCount; }
+    nextDisabled() { return !this.hasNext() || this.disabled; }
+    previousDisabled() { return !this.hasPrevious() || this.disabled; }
+    selectPage(pageNumber) { this._updatePages(pageNumber); }
+    ngOnChanges(changes) { this._updatePages(this.page); }
+    isEllipsis(pageNumber) { return pageNumber === -1; }
+    /**
+     * Appends ellipses and first/last page number to the displayed pages
+     */
+    _applyEllipses(start, end) {
+        if (this.ellipses) {
+            if (start > 0) {
+                // The first page will always be included. If the displayed range
+                // starts after the third page, then add ellipsis. But if the range
+                // starts on the third page, then add the second page instead of
+                // an ellipsis, because the ellipsis would only hide a single page.
+                if (start > 2) {
+                    this.pages.unshift(-1);
+                }
+                else if (start === 2) {
+                    this.pages.unshift(2);
+                }
+                this.pages.unshift(1);
+            }
+            if (end < this.pageCount) {
+                // The last page will always be included. If the displayed range
+                // ends before the third-last page, then add ellipsis. But if the range
+                // ends on third-last page, then add the second-last page instead of
+                // an ellipsis, because the ellipsis would only hide a single page.
+                if (end < (this.pageCount - 2)) {
+                    this.pages.push(-1);
+                }
+                else if (end === (this.pageCount - 2)) {
+                    this.pages.push(this.pageCount - 1);
+                }
+                this.pages.push(this.pageCount);
+            }
+        }
+    }
+    /**
+     * Rotates page numbers based on maxSize items visible.
+     * Currently selected page stays in the middle:
+     *
+     * Ex. for selected page = 6:
+     * [5,*6*,7] for maxSize = 3
+     * [4,5,*6*,7] for maxSize = 4
+     */
+    _applyRotation() {
+        let start = 0;
+        let end = this.pageCount;
+        let leftOffset = Math.floor(this.maxSize / 2);
+        let rightOffset = this.maxSize % 2 === 0 ? leftOffset - 1 : leftOffset;
+        if (this.page <= leftOffset) {
+            // very beginning, no rotation -> [0..maxSize]
+            end = this.maxSize;
+        }
+        else if (this.pageCount - this.page < leftOffset) {
+            // very end, no rotation -> [len-maxSize..len]
+            start = this.pageCount - this.maxSize;
+        }
+        else {
+            // rotate
+            start = this.page - leftOffset - 1;
+            end = this.page + rightOffset;
+        }
+        return [start, end];
+    }
+    /**
+     * Paginates page numbers based on maxSize items per page.
+     */
+    _applyPagination() {
+        let page = Math.ceil(this.page / this.maxSize) - 1;
+        let start = page * this.maxSize;
+        let end = start + this.maxSize;
+        return [start, end];
+    }
+    _setPageInRange(newPageNo) {
+        const prevPageNo = this.page;
+        this.page = getValueInRange(newPageNo, this.pageCount, 1);
+        if (this.page !== prevPageNo && isNumber(this.collectionSize)) {
+            this.pageChange.emit(this.page);
+        }
+    }
+    _updatePages(newPage) {
+        this.pageCount = Math.ceil(this.collectionSize / this.pageSize);
+        if (!isNumber(this.pageCount)) {
+            this.pageCount = 0;
+        }
+        // fill-in model needed to render pages
+        this.pages.length = 0;
+        for (let i = 1; i <= this.pageCount; i++) {
+            this.pages.push(i);
+        }
+        // set page within 1..max range
+        this._setPageInRange(newPage);
+        // apply maxSize if necessary
+        if (this.maxSize > 0 && this.pageCount > this.maxSize) {
+            let start = 0;
+            let end = this.pageCount;
+            // either paginating or rotating page numbers
+            if (this.rotate) {
+                [start, end] = this._applyRotation();
+            }
+            else {
+                [start, end] = this._applyPagination();
+            }
+            this.pages = this.pages.slice(start, end);
+            // adding ellipses
+            this._applyEllipses(start, end);
+        }
+    }
+}
+NgbPagination.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPagination, deps: [{ token: i1.NgbPaginationConfig }], target: i0.ɵɵFactoryTarget.Component });
+NgbPagination.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.0.3", type: NgbPagination, selector: "ngb-pagination", inputs: { disabled: "disabled", boundaryLinks: "boundaryLinks", directionLinks: "directionLinks", ellipses: "ellipses", rotate: "rotate", collectionSize: "collectionSize", maxSize: "maxSize", page: "page", pageSize: "pageSize", size: "size" }, outputs: { pageChange: "pageChange" }, host: { attributes: { "role": "navigation" } }, queries: [{ propertyName: "tplEllipsis", first: true, predicate: NgbPaginationEllipsis, descendants: true }, { propertyName: "tplFirst", first: true, predicate: NgbPaginationFirst, descendants: true }, { propertyName: "tplLast", first: true, predicate: NgbPaginationLast, descendants: true }, { propertyName: "tplNext", first: true, predicate: NgbPaginationNext, descendants: true }, { propertyName: "tplNumber", first: true, predicate: NgbPaginationNumber, descendants: true }, { propertyName: "tplPrevious", first: true, predicate: NgbPaginationPrevious, descendants: true }, { propertyName: "tplPages", first: true, predicate: NgbPaginationPages, descendants: true }], usesOnChanges: true, ngImport: i0, template: `
+    <ng-template #first><span aria-hidden="true" i18n="@@ngb.pagination.first">&laquo;&laquo;</span></ng-template>
+    <ng-template #previous><span aria-hidden="true" i18n="@@ngb.pagination.previous">&laquo;</span></ng-template>
+    <ng-template #next><span aria-hidden="true" i18n="@@ngb.pagination.next">&raquo;</span></ng-template>
+    <ng-template #last><span aria-hidden="true" i18n="@@ngb.pagination.last">&raquo;&raquo;</span></ng-template>
+    <ng-template #ellipsis>...</ng-template>
+    <ng-template #defaultNumber let-page let-currentPage="currentPage">
+      {{ page }}
+      <span *ngIf="page === currentPage" class="sr-only">(current)</span>
+    </ng-template>
+    <ng-template #defaultPages let-page let-pages="pages" let-disabled="disabled">
+      <li *ngFor="let pageNumber of pages" class="page-item" [class.active]="pageNumber === page"
+        [class.disabled]="isEllipsis(pageNumber) || disabled" [attr.aria-current]="(pageNumber === page ? 'page' : null)">
+        <a *ngIf="isEllipsis(pageNumber)" class="page-link" tabindex="-1" aria-disabled="true">
+          <ng-template [ngTemplateOutlet]="tplEllipsis?.templateRef || ellipsis"
+                      [ngTemplateOutletContext]="{disabled: true, currentPage: page}"></ng-template>
+        </a>
+        <a *ngIf="!isEllipsis(pageNumber)" class="page-link" href (click)="selectPage(pageNumber); $event.preventDefault()"
+          [attr.tabindex]="disabled ? '-1' : null" [attr.aria-disabled]="disabled ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplNumber?.templateRef || defaultNumber"
+                      [ngTemplateOutletContext]="{disabled: disabled, $implicit: pageNumber, currentPage: page}"></ng-template>
+        </a>
+      </li>
+    </ng-template>
+    <ul [class]="'pagination' + (size ? ' pagination-' + size : '')">
+      <li *ngIf="boundaryLinks" class="page-item"
+        [class.disabled]="previousDisabled()">
+        <a aria-label="First" i18n-aria-label="@@ngb.pagination.first-aria" class="page-link" href
+          (click)="selectPage(1); $event.preventDefault()" [attr.tabindex]="previousDisabled() ? '-1' : null"
+          [attr.aria-disabled]="previousDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplFirst?.templateRef || first"
+                       [ngTemplateOutletContext]="{disabled: previousDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+
+      <li *ngIf="directionLinks" class="page-item"
+        [class.disabled]="previousDisabled()">
+        <a aria-label="Previous" i18n-aria-label="@@ngb.pagination.previous-aria" class="page-link" href
+          (click)="selectPage(page-1); $event.preventDefault()" [attr.tabindex]="previousDisabled() ? '-1' : null"
+          [attr.aria-disabled]="previousDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplPrevious?.templateRef || previous"
+                       [ngTemplateOutletContext]="{disabled: previousDisabled()}"></ng-template>
+        </a>
+      </li>
+      <ng-template
+        [ngTemplateOutlet]="tplPages?.templateRef || defaultPages"
+        [ngTemplateOutletContext]="{ $implicit: page, pages: pages, disabled: disabled }"
+      >
+      </ng-template>
+      <li *ngIf="directionLinks" class="page-item" [class.disabled]="nextDisabled()">
+        <a aria-label="Next" i18n-aria-label="@@ngb.pagination.next-aria" class="page-link" href
+          (click)="selectPage(page+1); $event.preventDefault()" [attr.tabindex]="nextDisabled() ? '-1' : null"
+          [attr.aria-disabled]="nextDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplNext?.templateRef || next"
+                       [ngTemplateOutletContext]="{disabled: nextDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+
+      <li *ngIf="boundaryLinks" class="page-item" [class.disabled]="nextDisabled()">
+        <a aria-label="Last" i18n-aria-label="@@ngb.pagination.last-aria" class="page-link" href
+          (click)="selectPage(pageCount); $event.preventDefault()" [attr.tabindex]="nextDisabled() ? '-1' : null"
+          [attr.aria-disabled]="nextDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplLast?.templateRef || last"
+                       [ngTemplateOutletContext]="{disabled: nextDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+    </ul>
+  `, isInline: true, directives: [{ type: i2.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { type: i2.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { type: i2.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet"] }], changeDetection: i0.ChangeDetectionStrategy.OnPush });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbPagination, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'ngb-pagination',
+                    changeDetection: ChangeDetectionStrategy.OnPush,
+                    host: { 'role': 'navigation' },
+                    template: `
+    <ng-template #first><span aria-hidden="true" i18n="@@ngb.pagination.first">&laquo;&laquo;</span></ng-template>
+    <ng-template #previous><span aria-hidden="true" i18n="@@ngb.pagination.previous">&laquo;</span></ng-template>
+    <ng-template #next><span aria-hidden="true" i18n="@@ngb.pagination.next">&raquo;</span></ng-template>
+    <ng-template #last><span aria-hidden="true" i18n="@@ngb.pagination.last">&raquo;&raquo;</span></ng-template>
+    <ng-template #ellipsis>...</ng-template>
+    <ng-template #defaultNumber let-page let-currentPage="currentPage">
+      {{ page }}
+      <span *ngIf="page === currentPage" class="sr-only">(current)</span>
+    </ng-template>
+    <ng-template #defaultPages let-page let-pages="pages" let-disabled="disabled">
+      <li *ngFor="let pageNumber of pages" class="page-item" [class.active]="pageNumber === page"
+        [class.disabled]="isEllipsis(pageNumber) || disabled" [attr.aria-current]="(pageNumber === page ? 'page' : null)">
+        <a *ngIf="isEllipsis(pageNumber)" class="page-link" tabindex="-1" aria-disabled="true">
+          <ng-template [ngTemplateOutlet]="tplEllipsis?.templateRef || ellipsis"
+                      [ngTemplateOutletContext]="{disabled: true, currentPage: page}"></ng-template>
+        </a>
+        <a *ngIf="!isEllipsis(pageNumber)" class="page-link" href (click)="selectPage(pageNumber); $event.preventDefault()"
+          [attr.tabindex]="disabled ? '-1' : null" [attr.aria-disabled]="disabled ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplNumber?.templateRef || defaultNumber"
+                      [ngTemplateOutletContext]="{disabled: disabled, $implicit: pageNumber, currentPage: page}"></ng-template>
+        </a>
+      </li>
+    </ng-template>
+    <ul [class]="'pagination' + (size ? ' pagination-' + size : '')">
+      <li *ngIf="boundaryLinks" class="page-item"
+        [class.disabled]="previousDisabled()">
+        <a aria-label="First" i18n-aria-label="@@ngb.pagination.first-aria" class="page-link" href
+          (click)="selectPage(1); $event.preventDefault()" [attr.tabindex]="previousDisabled() ? '-1' : null"
+          [attr.aria-disabled]="previousDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplFirst?.templateRef || first"
+                       [ngTemplateOutletContext]="{disabled: previousDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+
+      <li *ngIf="directionLinks" class="page-item"
+        [class.disabled]="previousDisabled()">
+        <a aria-label="Previous" i18n-aria-label="@@ngb.pagination.previous-aria" class="page-link" href
+          (click)="selectPage(page-1); $event.preventDefault()" [attr.tabindex]="previousDisabled() ? '-1' : null"
+          [attr.aria-disabled]="previousDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplPrevious?.templateRef || previous"
+                       [ngTemplateOutletContext]="{disabled: previousDisabled()}"></ng-template>
+        </a>
+      </li>
+      <ng-template
+        [ngTemplateOutlet]="tplPages?.templateRef || defaultPages"
+        [ngTemplateOutletContext]="{ $implicit: page, pages: pages, disabled: disabled }"
+      >
+      </ng-template>
+      <li *ngIf="directionLinks" class="page-item" [class.disabled]="nextDisabled()">
+        <a aria-label="Next" i18n-aria-label="@@ngb.pagination.next-aria" class="page-link" href
+          (click)="selectPage(page+1); $event.preventDefault()" [attr.tabindex]="nextDisabled() ? '-1' : null"
+          [attr.aria-disabled]="nextDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplNext?.templateRef || next"
+                       [ngTemplateOutletContext]="{disabled: nextDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+
+      <li *ngIf="boundaryLinks" class="page-item" [class.disabled]="nextDisabled()">
+        <a aria-label="Last" i18n-aria-label="@@ngb.pagination.last-aria" class="page-link" href
+          (click)="selectPage(pageCount); $event.preventDefault()" [attr.tabindex]="nextDisabled() ? '-1' : null"
+          [attr.aria-disabled]="nextDisabled() ? 'true' : null">
+          <ng-template [ngTemplateOutlet]="tplLast?.templateRef || last"
+                       [ngTemplateOutletContext]="{disabled: nextDisabled(), currentPage: page}"></ng-template>
+        </a>
+      </li>
+    </ul>
+  `
+                }]
+        }], ctorParameters: function () { return [{ type: i1.NgbPaginationConfig }]; }, propDecorators: { tplEllipsis: [{
+                type: ContentChild,
+                args: [NgbPaginationEllipsis, { static: false }]
+            }], tplFirst: [{
+                type: ContentChild,
+                args: [NgbPaginationFirst, { static: false }]
+            }], tplLast: [{
+                type: ContentChild,
+                args: [NgbPaginationLast, { static: false }]
+            }], tplNext: [{
+                type: ContentChild,
+                args: [NgbPaginationNext, { static: false }]
+            }], tplNumber: [{
+                type: ContentChild,
+                args: [NgbPaginationNumber, { static: false }]
+            }], tplPrevious: [{
+                type: ContentChild,
+                args: [NgbPaginationPrevious, { static: false }]
+            }], tplPages: [{
+                type: ContentChild,
+                args: [NgbPaginationPages, { static: false }]
+            }], disabled: [{
+                type: Input
+            }], boundaryLinks: [{
+                type: Input
+            }], directionLinks: [{
+                type: Input
+            }], ellipses: [{
+                type: Input
+            }], rotate: [{
+                type: Input
+            }], collectionSize: [{
+                type: Input
+            }], maxSize: [{
+                type: Input
+            }], page: [{
+                type: Input
+            }], pageSize: [{
+                type: Input
+            }], pageChange: [{
+                type: Output
+            }], size: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGFnaW5hdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9wYWdpbmF0aW9uL3BhZ2luYXRpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUNMLFNBQVMsRUFDVCxZQUFZLEVBQ1osU0FBUyxFQUNULFlBQVksRUFDWixLQUFLLEVBQ0wsTUFBTSxFQUVOLHVCQUF1QixFQUd4QixNQUFNLGVBQWUsQ0FBQztBQUN2QixPQUFPLEVBQUMsZUFBZSxFQUFFLFFBQVEsRUFBQyxNQUFNLGNBQWMsQ0FBQzs7OztBQWlFdkQ7Ozs7R0FJRztBQUVILE1BQU0sT0FBTyxxQkFBcUI7SUFDaEMsWUFBbUIsV0FBa0Q7UUFBbEQsZ0JBQVcsR0FBWCxXQUFXLENBQXVDO0lBQUcsQ0FBQzs7a0hBRDlELHFCQUFxQjtzR0FBckIscUJBQXFCOzJGQUFyQixxQkFBcUI7a0JBRGpDLFNBQVM7bUJBQUMsRUFBQyxRQUFRLEVBQUUsb0NBQW9DLEVBQUM7O0FBSzNEOzs7O0dBSUc7QUFFSCxNQUFNLE9BQU8sa0JBQWtCO0lBQzdCLFlBQW1CLFdBQWtEO1FBQWxELGdCQUFXLEdBQVgsV0FBVyxDQUF1QztJQUFHLENBQUM7OytHQUQ5RCxrQkFBa0I7bUdBQWxCLGtCQUFrQjsyRkFBbEIsa0JBQWtCO2tCQUQ5QixTQUFTO21CQUFDLEVBQUMsUUFBUSxFQUFFLGlDQUFpQyxFQUFDOztBQUt4RDs7OztHQUlHO0FBRUgsTUFBTSxPQUFPLGlCQUFpQjtJQUM1QixZQUFtQixXQUFrRDtRQUFsRCxnQkFBVyxHQUFYLFdBQVcsQ0FBdUM7SUFBRyxDQUFDOzs4R0FEOUQsaUJBQWlCO2tHQUFqQixpQkFBaUI7MkZBQWpCLGlCQUFpQjtrQkFEN0IsU0FBUzttQkFBQyxFQUFDLFFBQVEsRUFBRSxnQ0FBZ0MsRUFBQzs7QUFLdkQ7Ozs7R0FJRztBQUVILE1BQU0sT0FBTyxpQkFBaUI7SUFDNUIsWUFBbUIsV0FBa0Q7UUFBbEQsZ0JBQVcsR0FB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QkFBQyxpQkFBaUIsRUFBRSxFQUFDLE1BQU0sRUFBRSxLQUFLLEVBQUM7Z0JBQ0UsT0FBTztzQkFBeEQsWUFBWTt1QkFBQyxpQkFBaUIsRUFBRSxFQUFDLE1BQU0sRUFBRSxLQUFLLEVBQUM7Z0JBQ0ksU0FBUztzQkFBNUQsWUFBWTt1QkFBQyxtQkFBbUIsRUFBRSxFQUFDLE1BQU0sRUFBRSxLQUFLLEVBQUM7Z0JBQ0ksV0FBVztzQkFBaEUsWUFBWTt1QkFBQyxxQkFBcUIsRUFBRSxFQUFDLE1BQU0sRUFBRSxLQUFLLEVBQUM7Z0JBQ0QsUUFBUTtzQkFBMUQsWUFBWTt1QkFBQyxrQkFBa0IsRUFBRSxFQUFDLE1BQU0sRUFBRSxLQUFLLEVBQUM7Z0JBS3hDLFFBQVE7c0JBQWhCLEtBQUs7Z0JBS0csYUFBYTtzQkFBckIsS0FBSztnQkFLRyxjQUFjO3NCQUF0QixLQUFLO2dCQUtHLFFBQVE7c0JBQWhCLEtBQUs7Z0JBT0csTUFBTTtzQkFBZCxLQUFLO2dCQVNHLGNBQWM7c0JBQXRCLEtBQUs7Z0JBS0csT0FBTztzQkFBZixLQUFLO2dCQU9HLElBQUk7c0JBQVosS0FBSztnQkFLRyxRQUFRO3NCQUFoQixLQUFLO2dCQVNJLFVBQVU7c0JBQW5CLE1BQU07Z0JBT0UsSUFBSTtzQkFBWixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtcclxuICBDb21wb25lbnQsXHJcbiAgQ29udGVudENoaWxkLFxyXG4gIERpcmVjdGl2ZSxcclxuICBFdmVudEVtaXR0ZXIsXHJcbiAgSW5wdXQsXHJcbiAgT3V0cHV0LFxyXG4gIE9uQ2hhbmdlcyxcclxuICBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneSxcclxuICBTaW1wbGVDaGFuZ2VzLFxyXG4gIFRlbXBsYXRlUmVmXHJcbn0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcbmltcG9ydCB7Z2V0VmFsdWVJblJhbmdlLCBpc051bWJlcn0gZnJvbSAnLi4vdXRpbC91dGlsJztcclxuaW1wb3J0IHtOZ2JQYWdpbmF0aW9uQ29uZmlnfSBmcm9tICcuL3BhZ2luYXRpb24tY29uZmlnJztcclxuXHJcbi8qKlxyXG4gKiBBIGNvbnRleHQgZm9yIHRoZVxyXG4gKiAqIGBOZ2JQYWdpbmF0aW9uRmlyc3RgXHJcbiAqICogYE5nYlBhZ2luYXRpb25QcmV2aW91c2BcclxuICogKiBgTmdiUGFnaW5hdGlvbk5leHRgXHJcbiAqICogYE5nYlBhZ2luYXRpb25MYXN0YFxyXG4gKiAqIGBOZ2JQYWdpbmF0aW9uRWxsaXBzaXNgXHJcbiAqICogYE5nYlBhZ2luYXRpb25QYWdlc2BcclxuICpcclxuICogbGluayB0ZW1wbGF0ZXMgaW4gY2FzZSB5b3Ugd2FudCB0byBvdmVycmlkZSBvbmUuXHJcbiAqXHJcbiAqIEBzaW5jZSA0LjEuMFxyXG4gKi9cclxuZXhwb3J0IGludGVyZmFjZSBOZ2JQYWdpbmF0aW9uTGlua0NvbnRleHQge1xyXG4gIC8qKlxyXG4gICAqIFBhZ2UgbnVtYmVyIGRpc3BsYXllZCBieSB0aGUgY3VycmVudCBsaW5rLlxyXG4gICAqL1xyXG4gIGN1cnJlbnRQYWdlOiBudW1iZXI7XHJcblxyXG4gIC8qKlxyXG4gICAqIElmIGB0cnVlYCwgdGhlIGN1cnJlbnQgbGluayBpcyBkaXNhYmxlZC5cclxuICAgKi9cclxuICBkaXNhYmxlZDogYm9vbGVhbjtcclxufVxyXG5cclxuLyoqXHJcbiAqIEEgY29udGV4dCBmb3IgdGhlIGBOZ2JQYWdpbmF0aW9uTnVtYmVyYCBsaW5rIHRlbXBsYXRlIGluIGNhc2UgeW91IHdhbnQgdG8gb3ZlcnJpZGUgb25lLlxyXG4gKlxyXG4gKiBFeHRlbmRzIGBOZ2JQYWdpbmF0aW9uTGlua0NvbnRleHRgLlxyXG4gKlxyXG4gKiBAc2luY2UgNC4xLjBcclxuICovXHJcbmV4cG9ydCBpbnRlcmZhY2UgTmdiUGFnaW5hdGlvbk51bWJlckNvbnRleHQgZXh0ZW5kcyBOZ2JQYWdpbmF0aW9uTGlua0NvbnRleHQge1xyXG4gIC8qKlxyXG4gICAqIFRoZSBwYWdlIG51bWJlciwgZGlzcGxheWVkIGJ5IHRoZSBjdXJyZW50IHBhZ2UgbGluay5cclxuICAgKi9cclxuICAkaW1wbGljaXQ6IG51bWJlcjtcclxufVxyXG5cclxuLyoqXHJcbiAqIEEgY29udGV4dCBmb3IgdGhlIGBOZ2JQYWdpbmF0aW9uUGFnZXNgIHBhZ2VzIHRlbXBsYXRlIGluIGNhc2UgeW91IHdhbnQgdG8gb3ZlcnJpZGVcclxuICogdGhlIHdheSBhbGwgcGFnZXMgYXJlIGRpc3BsYXllZC5cclxuICpcclxuICogQHNpbmNlIDkuMS4wXHJcbiAqL1xyXG5leHBvcnQgaW50ZXJmYWNlIE5nYlBhZ2luYXRpb25QYWdlc0NvbnRleHQge1xyXG4gIC8qKlxyXG4gICAqIFRoZSBjdXJyZW50bHkgc2VsZWN0ZWQgcGFnZSBudW1iZXIuXHJcbiAgICovXHJcbiAgJGltcGxpY2l0OiBudW1iZXI7XHJcblxyXG4gIC8qKlxyXG4gICAqIElmIGB0cnVlYCwgcGFnaW5hdGlvbiBpcyBkaXNhYmxlZC5cclxuICAgKi9cclxuICBkaXNhYmxlZDogYm9vbGVhbjtcclxuXHJcbiAgLyoqXHJcbiAgICogUGFnZXMgbnVtYmVycyB0aGF0IHNob3VsZCBiZSByZW5kZXJlZCBzdGFydGluZyB3aXRoIDEuXHJcbiAgICovXHJcbiAgcGFnZXM6IG51bWJlcltdO1xyXG59XHJcblxyXG4vKipcclxuICogQSBkaXJlY3RpdmUgdG8gbWF0Y2ggdGhlICdlbGxpcHNpcycgbGluayB0ZW1wbGF0ZVxyXG4gKlxyXG4gKiBAc2luY2UgNC4xLjBcclxuICovXHJcbkBEaXJlY3RpdmUoe3NlbGVjdG9yOiAnbmctdGVtcGxhdGVbbmdiUGFnaW5hdGlvbkVsbGlwc2lzXSd9KVxyXG5leHBvcnQgY2xhc3MgTmdiUGFnaW5hdGlvbkVsbGlwc2lzIHtcclxuICBjb25zdHJ1Y3RvcihwdWJsaWMgdGVtcGxhdGVSZWY6IFRlbXBsYXRlUmVmPE5nYlBhZ2luYXRpb25MaW5rQ29udGV4dD4pIHt9XHJcbn1cclxuXHJcbi8qKlxyXG4gKiBBIGRpcmVjdGl2ZSB0byBtYXRjaCB0aGUgJ2ZpcnN0JyBsaW5rIHRlbXBsYXRlXHJcbiAqXHJcbiAqIEBzaW5jZSA0LjEuMFxyXG4gKi9cclxuQERpcmVjdGl2ZSh7c2VsZWN0b3I6ICduZy10ZW1wbGF0ZVtuZ2JQYWdpbmF0aW9uRmlyc3RdJ30pXHJcbmV4cG9ydCBjbGFzcyBOZ2JQYWdpbmF0aW9uRmlyc3Qge1xyXG4gIGNvbnN0cnVjdG9yKHB1YmxpYyB0ZW1wbGF0ZVJlZjogVGVtcGxhdGVSZWY8TmdiUGFnaW5hdGlvbkxpbmtDb250ZXh0Pikge31cclxufVxyXG5cclxuLyoqXHJcbiAqIEEgZGlyZWN0aXZlIHRvIG1hdGNoIHRoZSAnbGFzdCcgbGluayB0ZW1wbGF0ZVxyXG4gKlxyXG4gKiBAc2luY2UgNC4xLjBcclxuICovXHJcbkBEaXJlY3RpdmUoe3NlbGVjdG9yOiAnbmctdGVtcGxhdGVbbmdiUGFnaW5hdGlvbkxhc3RdJ30pXHJcbmV4cG9ydCBjbGFzcyBOZ2JQYWdpbmF0aW9uTGFzdCB7XHJcbiAgY29uc3RydWN0b3IocHVibGljIHRlbXBsYXRlUmVmOiBUZW1wbGF0ZVJlZjxOZ2JQYWdpbmF0aW9uTGlua0NvbnRleHQ+KSB7fVxyXG59XHJcblxyXG4vKipcclxuICogQSBkaXJlY3RpdmUgdG8gbWF0Y2ggdGhlICduZXh0JyBsaW5rIHRlbXBsYXRlXHJcbiAqXHJcbiAqIEBzaW5jZSA0LjEuMFxyXG4gKi9cclxuQERpcmVjdGl2ZSh7c2VsZWN0b3I6ICduZy10ZW1wbGF0ZVtuZ2JQYWdpbmF0aW9uTmV4dF0nfSlcclxuZXhwb3J0IGNsYXNzIE5nYlBhZ2luYXRpb25OZXh0IHtcclxuICBjb25zdHJ1Y3RvcihwdWJsaWMgdGVtcGxhdGVSZWY6IFRlbXBsYXRlUmVmPE5nYlBhZ2luYXRpb25MaW5rQ29udGV4dD4pIHt9XHJcbn1cclxuXHJcbi8qKlxyXG4gKiBBIGRpcmVjdGl2ZSB0byBtYXRjaCB0aGUgcGFnZSAnbnVtYmVyJyBsaW5rIHRlbXBsYXRlXHJcbiAqXHJcbiAqIEBzaW5jZSA0LjEuMFxyXG4gKi9cclxuQERpcmVjdGl2ZSh7c2VsZWN0b3I6ICduZy10ZW1wbGF0ZVtuZ2JQYWdpbmF0aW9uTnVtYmVyXSd9KVxyXG5leHBvcnQgY2xhc3MgTmdiUGFnaW5hdGlvbk51bWJlciB7XHJcbiAgY29uc3RydWN0b3IocHVibGljIHRlbXBsYXRlUmVmOiBUZW1wbGF0ZVJlZjxOZ2JQYWdpbmF0aW9uTnVtYmVyQ29udGV4dD4pIHt9XHJcbn1cclxuXHJcbi8qKlxyXG4gKiBBIGRpcmVjdGl2ZSB0byBtYXRjaCB0aGUgJ3ByZXZpb3VzJyBsaW5rIHRlbXBsYXRlXHJcbiAqXHJcbiAqIEBzaW5jZSA0LjEuMFxyXG4gKi9cclxuQERpcmVjdGl2ZSh7c2VsZWN0b3I6ICduZy10ZW1wbGF0ZVtuZ2JQYWdpbmF0aW9uUHJldmlvdXNdJ30pXHJcbmV4cG9ydCBjbGFzcyBOZ2JQYWdpbmF0aW9uUHJldmlvdXMge1xyXG4gIGNvbnN0cnVjdG9yKHB1YmxpYyB0ZW1wbGF0ZVJlZjogVGVtcGxhdGVSZWY8TmdiUGFnaW5hdGlvbkxpbmtDb250ZXh0Pikge31cclxufVxyXG5cclxuLyoqXHJcbiAqIEEgZGlyZWN0aXZlIHRvIG1hdGNoIHRoZSAncGFnZXMnIHdob2xlIGNvbnRlbnRcclxuICpcclxuICogQHNpbmNlIDkuMS4wXHJcbiAqL1xyXG5ARGlyZWN0aXZlKHtzZWxlY3RvcjogJ25nLXRlbXBsYXRlW25nYlBhZ2luYXRpb25QYWdlc10nfSlcclxuZXhwb3J0IGNsYXNzIE5nYlBhZ2luYXRpb25QYWdlcyB7XHJcbiAgY29uc3RydWN0b3IocHVibGljIHRlbXBsYXRlUmVmOiBUZW1wbGF0ZVJlZjxOZ2JQYWdpbmF0aW9uUGFnZXNDb250ZXh0Pikge31cclxufVxyXG5cclxuLyoqXHJcbiAqIEEgY29tcG9uZW50IHRoYXQgZGlzcGxheXMgcGFnZSBudW1iZXJzIGFuZCBhbGxvd3MgdG8gY3VzdG9taXplIHRoZW0gaW4gc2V2ZXJhbCB3YXlzLlxyXG4gKi9cclxuQENvbXBvbmVudCh7XHJcbiAgc2VsZWN0b3I6ICduZ2ItcGFnaW5hdGlvbicsXHJcbiAgY2hhbmdlRGV0ZWN0aW9uOiBDaGFuZ2VEZXRlY3Rpb25TdHJhdGVneS5PblB1c2gsXHJcbiAgaG9zdDogeydyb2xlJzogJ25hdmlnYXRpb24nfSxcclxuICB0ZW1wbGF0ZTogYFxyXG4gICAgPG5nLXRlbXBsYXRlICNmaXJzdD48c3BhbiBhcmlhLWhpZGRlbj1cInRydWVcIiBpMThuPVwiQEBuZ2IucGFnaW5hdGlvbi5maXJzdFwiPiZsYXF1bzsmbGFxdW87PC9zcGFuPjwvbmctdGVtcGxhdGU+XHJcbiAgICA8bmctdGVtcGxhdGUgI3ByZXZpb3VzPjxzcGFuIGFyaWEtaGlkZGVuPVwidHJ1ZVwiIGkxOG49XCJAQG5nYi5wYWdpbmF0aW9uLnByZXZpb3VzXCI+JmxhcXVvOzwvc3Bhbj48L25nLXRlbXBsYXRlPlxyXG4gICAgPG5nLXRlbXBsYXRlICNuZXh0PjxzcGFuIGFyaWEtaGlkZGVuPVwidHJ1ZVwiIGkxOG49XCJAQG5nYi5wYWdpbmF0aW9uLm5leHRcIj4mcmFxdW87PC9zcGFuPjwvbmctdGVtcGxhdGU+XHJcbiAgICA8bmctdGVtcGxhdGUgI2xhc3Q+PHNwYW4gYXJpYS1oaWRkZW49XCJ0cnVlXCIgaTE4bj1cIkBAbmdiLnBhZ2luYXRpb24ubGFzdFwiPiZyYXF1bzsmcmFxdW87PC9zcGFuPjwvbmctdGVtcGxhdGU+XHJcbiAgICA8bmctdGVtcGxhdGUgI2VsbGlwc2lzPi4uLjwvbmctdGVtcGxhdGU+XHJcbiAgICA8bmctdGVtcGxhdGUgI2RlZmF1bHROdW1iZXIgbGV0LXBhZ2UgbGV0LWN1cnJlbnRQYWdlPVwiY3VycmVudFBhZ2VcIj5cclxuICAgICAge3sgcGFnZSB9fVxyXG4gICAgICA8c3BhbiAqbmdJZj1cInBhZ2UgPT09IGN1cnJlbnRQYWdlXCIgY2xhc3M9XCJzci1vbmx5XCI+KGN1cnJlbnQpPC9zcGFuPlxyXG4gICAgPC9uZy10ZW1wbGF0ZT5cclxuICAgIDxuZy10ZW1wbGF0ZSAjZGVmYXVsdFBhZ2VzIGxldC1wYWdlIGxldC1wYWdlcz1cInBhZ2VzXCIgbGV0LWRpc2FibGVkPVwiZGlzYWJsZWRcIj5cclxuICAgICAgPGxpICpuZ0Zvcj1cImxldCBwYWdlTnVtYmVyIG9mIHBhZ2VzXCIgY2xhc3M9XCJwYWdlLWl0ZW1cIiBbY2xhc3MuYWN0aXZlXT1cInBhZ2VOdW1iZXIgPT09IHBhZ2VcIlxyXG4gICAgICAgIFtjbGFzcy5kaXNhYmxlZF09XCJpc0VsbGlwc2lzKHBhZ2VOdW1iZXIpIHx8IGRpc2FibGVkXCIgW2F0dHIuYXJpYS1jdXJyZW50XT1cIihwYWdlTnVtYmVyID09PSBwYWdlID8gJ3BhZ2UnIDogbnVsbClcIj5cclxuICAgICAgICA8YSAqbmdJZj1cImlzRWxsaXBzaXMocGFnZU51bWJlcilcIiBjbGFzcz1cInBhZ2UtbGlua1wiIHRhYmluZGV4PVwiLTFcIiBhcmlhLWRpc2FibGVkPVwidHJ1ZVwiPlxyXG4gICAgICAgICAgPG5nLXRlbXBsYXRlIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRwbEVsbGlwc2lzPy50ZW1wbGF0ZVJlZiB8fCBlbGxpcHNpc1wiXHJcbiAgICAgICAgICAgICAgICAgICAgICBbbmdUZW1wbGF0ZU91dGxldENvbnRleHRdPVwie2Rpc2FibGVkOiB0cnVlLCBjdXJyZW50UGFnZTogcGFnZX1cIj48L25nLXRlbXBsYXRlPlxyXG4gICAgICAgIDwvYT5cclxuICAgICAgICA8YSAqbmdJZj1cIiFpc0VsbGlwc2lzKHBhZ2VOdW1iZXIpXCIgY2xhc3M9XCJwYWdlLWxpbmtcIiBocmVmIChjbGljayk9XCJzZWxlY3RQYWdlKHBhZ2VOdW1iZXIpOyAkZXZlbnQucHJldmVudERlZmF1bHQoKVwiXHJcbiAgICAgICAgICBbYXR0ci50YWJpbmRleF09XCJkaXNhYmxlZCA/ICctMScgOiBudWxsXCIgW2F0dHIuYXJpYS1kaXNhYmxlZF09XCJkaXNhYmxlZCA/ICd0cnVlJyA6IG51bGxcIj5cclxuICAgICAgICAgIDxuZy10ZW1wbGF0ZSBbbmdUZW1wbGF0ZU91dGxldF09XCJ0cGxOdW1iZXI/LnRlbXBsYXRlUmVmIHx8IGRlZmF1bHROdW1iZXJcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgW25nVGVtcGxhdGVPdXRsZXRDb250ZXh0XT1cIntkaXNhYmxlZDogZGlzYWJsZWQsICRpbXBsaWNpdDogcGFnZU51bWJlciwgY3VycmVudFBhZ2U6IHBhZ2V9XCI+PC9uZy10ZW1wbGF0ZT5cclxuICAgICAgICA8L2E+XHJcbiAgICAgIDwvbGk+XHJcbiAgICA8L25nLXRlbXBsYXRlPlxyXG4gICAgPHVsIFtjbGFzc109XCIncGFnaW5hdGlvbicgKyAoc2l6ZSA/ICcgcGFnaW5hdGlvbi0nICsgc2l6ZSA6ICcnKVwiPlxyXG4gICAgICA8bGkgKm5nSWY9XCJib3VuZGFyeUxpbmtzXCIgY2xhc3M9XCJwYWdlLWl0ZW1cIlxyXG4gICAgICAgIFtjbGFzcy5kaXNhYmxlZF09XCJwcmV2aW91c0Rpc2FibGVkKClcIj5cclxuICAgICAgICA8YSBhcmlhLWxhYmVsPVwiRmlyc3RcIiBpMThuLWFyaWEtbGFiZWw9XCJAQG5nYi5wYWdpbmF0aW9uLmZpcnN0LWFyaWFcIiBjbGFzcz1cInBhZ2UtbGlua1wiIGhyZWZcclxuICAgICAgICAgIChjbGljayk9XCJzZWxlY3RQYWdlKDEpOyAkZXZlbnQucHJldmVudERlZmF1bHQoKVwiIFthdHRyLnRhYmluZGV4XT1cInByZXZpb3VzRGlzYWJsZWQoKSA/ICctMScgOiBudWxsXCJcclxuICAgICAgICAgIFthdHRyLmFyaWEtZGlzYWJsZWRdPVwicHJldmlvdXNEaXNhYmxlZCgpID8gJ3RydWUnIDogbnVsbFwiPlxyXG4gICAgICAgICAgPG5nLXRlbXBsYXRlIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRwbEZpcnN0Py50ZW1wbGF0ZVJlZiB8fCBmaXJzdFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgW25nVGVtcGxhdGVPdXRsZXRDb250ZXh0XT1cIntkaXNhYmxlZDogcHJldmlvdXNEaXNhYmxlZCgpLCBjdXJyZW50UGFnZTogcGFnZX1cIj48L25nLXRlbXBsYXRlPlxyXG4gICAgICAgIDwvYT5cclxuICAgICAgPC9saT5cclxuXHJcbiAgICAgIDxsaSAqbmdJZj1cImRpcmVjdGlvbkxpbmtzXCIgY2xhc3M9XCJwYWdlLWl0ZW1cIlxyXG4gICAgICAgIFtjbGFzcy5kaXNhYmxlZF09XCJwcmV2aW91c0Rpc2FibGVkKClcIj5cclxuICAgICAgICA8YSBhcmlhLWxhYmVsPVwiUHJldmlvdXNcIiBpMThuLWFyaWEtbGFiZWw9XCJAQG5nYi5wYWdpbmF0aW9uLnByZXZpb3VzLWFyaWFcIiBjbGFzcz1cInBhZ2UtbGlua1wiIGhyZWZcclxuICAgICAgICAgIChjbGljayk9XCJzZWxlY3RQYWdlKHBhZ2UtMSk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCIgW2F0dHIudGFiaW5kZXhdPVwicHJldmlvdXNEaXNhYmxlZCgpID8gJy0xJyA6IG51bGxcIlxyXG4gICAgICAgICAgW2F0dHIuYXJpYS1kaXNhYmxlZF09XCJwcmV2aW91c0Rpc2FibGVkKCkgPyAndHJ1ZScgOiBudWxsXCI+XHJcbiAgICAgICAgICA8bmctdGVtcGxhdGUgW25nVGVtcGxhdGVPdXRsZXRdPVwidHBsUHJldmlvdXM/LnRlbXBsYXRlUmVmIHx8IHByZXZpb3VzXCJcclxuICAgICAgICAgICAgICAgICAgICAgICBbbmdUZW1wbGF0ZU91dGxldENvbnRleHRdPVwie2Rpc2FibGVkOiBwcmV2aW91c0Rpc2FibGVkKCl9XCI+PC9uZy10ZW1wbGF0ZT5cclxuICAgICAgICA8L2E+XHJcbiAgICAgIDwvbGk+XHJcbiAgICAgIDxuZy10ZW1wbGF0ZVxyXG4gICAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRwbFBhZ2VzPy50ZW1wbGF0ZVJlZiB8fCBkZWZhdWx0UGFnZXNcIlxyXG4gICAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0Q29udGV4dF09XCJ7ICRpbXBsaWNpdDogcGFnZSwgcGFnZXM6IHBhZ2VzLCBkaXNhYmxlZDogZGlzYWJsZWQgfVwiXHJcbiAgICAgID5cclxuICAgICAgPC9uZy10ZW1wbGF0ZT5cclxuICAgICAgPGxpICpuZ0lmPVwiZGlyZWN0aW9uTGlua3NcIiBjbGFzcz1cInBhZ2UtaXRlbVwiIFtjbGFzcy5kaXNhYmxlZF09XCJuZXh0RGlzYWJsZWQoKVwiPlxyXG4gICAgICAgIDxhIGFyaWEtbGFiZWw9XCJOZXh0XCIgaTE4bi1hcmlhLWxhYmVsPVwiQEBuZ2IucGFnaW5hdGlvbi5uZXh0LWFyaWFcIiBjbGFzcz1cInBhZ2UtbGlua1wiIGhyZWZcclxuICAgICAgICAgIChjbGljayk9XCJzZWxlY3RQYWdlKHBhZ2UrMSk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCIgW2F0dHIudGFiaW5kZXhdPVwibmV4dERpc2FibGVkKCkgPyAnLTEnIDogbnVsbFwiXHJcbiAgICAgICAgICBbYXR0ci5hcmlhLWRpc2FibGVkXT1cIm5leHREaXNhYmxlZCgpID8gJ3RydWUnIDogbnVsbFwiPlxyXG4gICAgICAgICAgPG5nLXRlbXBsYXRlIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRwbE5leHQ/LnRlbXBsYXRlUmVmIHx8IG5leHRcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0Q29udGV4dF09XCJ7ZGlzYWJsZWQ6IG5leHREaXNhYmxlZCgpLCBjdXJyZW50UGFnZTogcGFnZX1cIj48L25nLXRlbXBsYXRlPlxyXG4gICAgICAgIDwvYT5cclxuICAgICAgPC9saT5cclxuXHJcbiAgICAgIDxsaSAqbmdJZj1cImJvdW5kYXJ5TGlua3NcIiBjbGFzcz1cInBhZ2UtaXRlbVwiIFtjbGFzcy5kaXNhYmxlZF09XCJuZXh0RGlzYWJsZWQoKVwiPlxyXG4gICAgICAgIDxhIGFyaWEtbGFiZWw9XCJMYXN0XCIgaTE4bi1hcmlhLWxhYmVsPVwiQEBuZ2IucGFnaW5hdGlvbi5sYXN0LWFyaWFcIiBjbGFzcz1cInBhZ2UtbGlua1wiIGhyZWZcclxuICAgICAgICAgIChjbGljayk9XCJzZWxlY3RQYWdlKHBhZ2VDb3VudCk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCIgW2F0dHIudGFiaW5kZXhdPVwibmV4dERpc2FibGVkKCkgPyAnLTEnIDogbnVsbFwiXHJcbiAgICAgICAgICBbYXR0ci5hcmlhLWRpc2FibGVkXT1cIm5leHREaXNhYmxlZCgpID8gJ3RydWUnIDogbnVsbFwiPlxyXG4gICAgICAgICAgPG5nLXRlbXBsYXRlIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRwbExhc3Q/LnRlbXBsYXRlUmVmIHx8IGxhc3RcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0Q29udGV4dF09XCJ7ZGlzYWJsZWQ6IG5leHREaXNhYmxlZCgpLCBjdXJyZW50UGFnZTogcGFnZX1cIj48L25nLXRlbXBsYXRlPlxyXG4gICAgICAgIDwvYT5cclxuICAgICAgPC9saT5cclxuICAgIDwvdWw+XHJcbiAgYFxyXG59KVxyXG5leHBvcnQgY2xhc3MgTmdiUGFnaW5hdGlvbiBpbXBsZW1lbnRzIE9uQ2hhbmdlcyB7XHJcbiAgcGFnZUNvdW50ID0gMDtcclxuICBwYWdlczogbnVtYmVyW10gPSBbXTtcclxuXHJcbiAgQENvbnRlbnRDaGlsZChOZ2JQYWdpbmF0aW9uRWxsaXBzaXMsIHtzdGF0aWM6IGZhbHNlfSkgdHBsRWxsaXBzaXM6IE5nYlBhZ2luYXRpb25FbGxpcHNpcztcclxuICBAQ29udGVudENoaWxkKE5nYlBhZ2luYXRpb25GaXJzdCwge3N0YXRpYzogZmFsc2V9KSB0cGxGaXJzdDogTmdiUGFnaW5hdGlvbkZpcnN0O1xyXG4gIEBDb250ZW50Q2hpbGQoTmdiUGFnaW5hdGlvbkxhc3QsIHtzdGF0aWM6IGZhbHNlfSkgdHBsTGFzdDogTmdiUGFnaW5hdGlvbkxhc3Q7XHJcbiAgQENvbnRlbnRDaGlsZChOZ2JQYWdpbmF0aW9uTmV4dCwge3N0YXRpYzogZmFsc2V9KSB0cGxOZXh0OiBOZ2JQYWdpbmF0aW9uTmV4dDtcclxuICBAQ29udGVudENoaWxkKE5nYlBhZ2luYXRpb25OdW1iZXIsIHtzdGF0aWM6IGZhbHNlfSkgdHBsTnVtYmVyOiBOZ2JQYWdpbmF0aW9uTnVtYmVyO1xyXG4gIEBDb250ZW50Q2hpbGQoTmdiUGFnaW5hdGlvblByZXZpb3VzLCB7c3RhdGljOiBmYWxzZX0pIHRwbFByZXZpb3VzOiBOZ2JQYWdpbmF0aW9uUHJldmlvdXM7XHJcbiAgQENvbnRlbnRDaGlsZChOZ2JQYWdpbmF0aW9uUGFnZXMsIHtzdGF0aWM6IGZhbHNlfSkgdHBsUGFnZXM6IE5nYlBhZ2luYXRpb25QYWdlcztcclxuXHJcbiAgLyoqXHJcbiAgICogSWYgYHRydWVgLCBwYWdpbmF0aW9uIGxpbmtzIHdpbGwgYmUgZGlzYWJsZWQuXHJcbiAgICovXHJcbiAgQElucHV0KCkgZGlzYWJsZWQ6IGJvb2xlYW47XHJcblxyXG4gIC8qKlxyXG4gICAqIElmIGB0cnVlYCwgdGhlIFwiRmlyc3RcIiBhbmQgXCJMYXN0XCIgcGFnZSBsaW5rcyBhcmUgc2hvd24uXHJcbiAgICovXHJcbiAgQElucHV0KCkgYm91bmRhcnlMaW5rczogYm9vbGVhbjtcclxuXHJcbiAgLyoqXHJcbiAgICogSWYgYHRydWVgLCB0aGUgXCJOZXh0XCIgYW5kIFwiUHJldmlvdXNcIiBwYWdlIGxpbmtzIGFyZSBzaG93bi5cclxuICAgKi9cclxuICBASW5wdXQoKSBkaXJlY3Rpb25MaW5rczogYm9vbGVhbjtcclxuXHJcbiAgLyoqXHJcbiAgICogSWYgYHRydWVgLCB0aGUgZWxsaXBzaXMgc3ltYm9scyBhbmQgZmlyc3QvbGFzdCBwYWdlIG51bWJlcnMgd2lsbCBiZSBzaG93biB3aGVuIGBtYXhTaXplYCA+IG51bWJlciBvZiBwYWdlcy5cclxuICAgKi9cclxuICBASW5wdXQoKSBlbGxpcHNlczogYm9vbGVhbjtcclxuXHJcbiAgLyoqXHJcbiAgICogV2hldGhlciB0byByb3RhdGUgcGFnZXMgd2hlbiBgbWF4U2l6ZWAgPiBudW1iZXIgb2YgcGFnZXMuXHJcbiAgICpcclxuICAgKiBUaGUgY3VycmVudCBwYWdlIGFsd2F5cyBzdGF5cyBpbiB0aGUgbWlkZGxlIGlmIGB0cnVlYC5cclxuICAgKi9cclxuICBASW5wdXQoKSByb3RhdGU6IGJvb2xlYW47XHJcblxyXG4gIC8qKlxyXG4gICAqICBUaGUgbnVtYmVyIG9mIGl0ZW1zIGluIHlvdXIgcGFnaW5hdGVkIGNvbGxlY3Rpb24uXHJcbiAgICpcclxuICAgKiAgTm90ZSwgdGhhdCB0aGlzIGlzIG5vdCB0aGUgbnVtYmVyIG9mIHBhZ2VzLiBQYWdlIG51bWJlcnMgYXJlIGNhbGN1bGF0ZWQgZHluYW1pY2FsbHkgYmFzZWQgb25cclxuICAgKiAgYGNvbGxlY3Rpb25TaXplYCBhbmQgYHBhZ2VTaXplYC4gRXguIGlmIHlvdSBoYXZlIDEwMCBpdGVtcyBpbiB5b3VyIGNvbGxlY3Rpb24gYW5kIGRpc3BsYXlpbmcgMjAgaXRlbXMgcGVyIHBhZ2UsXHJcbiAgICogIHlvdSdsbCBlbmQgdXAgd2l0aCA1IHBhZ2VzLlxyXG4gICAqL1xyXG4gIEBJbnB1dCgpIGNvbGxlY3Rpb25TaXplOiBudW1iZXI7XHJcblxyXG4gIC8qKlxyXG4gICAqICBUaGUgbWF4aW11bSBudW1iZXIgb2YgcGFnZXMgdG8gZGlzcGxheS5cclxuICAgKi9cclxuICBASW5wdXQoKSBtYXhTaXplOiBudW1iZXI7XHJcblxyXG4gIC8qKlxyXG4gICAqICBUaGUgY3VycmVudCBwYWdlLlxyXG4gICAqXHJcbiAgICogIFBhZ2UgbnVtYmVycyBzdGFydCB3aXRoIGAxYC5cclxuICAgKi9cclxuICBASW5wdXQoKSBwYWdlID0gMTtcclxuXHJcbiAgLyoqXHJcbiAgICogIFRoZSBudW1iZXIgb2YgaXRlbXMgcGVyIHBhZ2UuXHJcbiAgICovXHJcbiAgQElucHV0KCkgcGFnZVNpemU6IG51bWJlcjtcclxuXHJcbiAgLyoqXHJcbiAgICogIEFuIGV2ZW50IGZpcmVkIHdoZW4gdGhlIHBhZ2UgaXMgY2hhbmdlZC4gV2lsbCBmaXJlIG9ubHkgaWYgY29sbGVjdGlvbiBzaXplIGlzIHNldCBhbmQgYWxsIHZhbHVlcyBhcmUgdmFsaWQuXHJcbiAgICpcclxuICAgKiAgRXZlbnQgcGF5bG9hZCBpcyB0aGUgbnVtYmVyIG9mIHRoZSBuZXdseSBzZWxlY3RlZCBwYWdlLlxyXG4gICAqXHJcbiAgICogIFBhZ2UgbnVtYmVycyBzdGFydCB3aXRoIGAxYC5cclxuICAgKi9cclxuICBAT3V0cHV0KCkgcGFnZUNoYW5nZSA9IG5ldyBFdmVudEVtaXR0ZXI8bnVtYmVyPih0cnVlKTtcclxuXHJcbiAgLyoqXHJcbiAgICogVGhlIHBhZ2luYXRpb24gZGlzcGxheSBzaXplLlxyXG4gICAqXHJcbiAgICogQm9vdHN0cmFwIGN1cnJlbnRseSBzdXBwb3J0cyBzbWFsbCBhbmQgbGFyZ2Ugc2l6ZXMuXHJcbiAgICovXHJcbiAgQElucHV0KCkgc2l6ZTogJ3NtJyB8ICdsZyc7XHJcblxyXG4gIGNvbnN0cnVjdG9yKGNvbmZpZzogTmdiUGFnaW5hdGlvbkNvbmZpZykge1xyXG4gICAgdGhpcy5kaXNhYmxlZCA9IGNvbmZpZy5kaXNhYmxlZDtcclxuICAgIHRoaXMuYm91bmRhcnlMaW5rcyA9IGNvbmZpZy5ib3VuZGFyeUxpbmtzO1xyXG4gICAgdGhpcy5kaXJlY3Rpb25MaW5rcyA9IGNvbmZpZy5kaXJlY3Rpb25MaW5rcztcclxuICAgIHRoaXMuZWxsaXBzZXMgPSBjb25maWcuZWxsaXBzZXM7XHJcbiAgICB0aGlzLm1heFNpemUgPSBjb25maWcubWF4U2l6ZTtcclxuICAgIHRoaXMucGFnZVNpemUgPSBjb25maWcucGFnZVNpemU7XHJcbiAgICB0aGlzLnJvdGF0ZSA9IGNvbmZpZy5yb3RhdGU7XHJcbiAgICB0aGlzLnNpemUgPSBjb25maWcuc2l6ZTtcclxuICB9XHJcblxyXG4gIGhhc1ByZXZpb3VzKCk6IGJvb2xlYW4geyByZXR1cm4gdGhpcy5wYWdlID4gMTsgfVxyXG5cclxuICBoYXNOZXh0KCk6IGJvb2xlYW4geyByZXR1cm4gdGhpcy5wYWdlIDwgdGhpcy5wYWdlQ291bnQ7IH1cclxuXHJcbiAgbmV4dERpc2FibGVkKCk6IGJvb2xlYW4geyByZXR1cm4gIXRoaXMuaGFzTmV4dCgpIHx8IHRoaXMuZGlzYWJsZWQ7IH1cclxuXHJcbiAgcHJldmlvdXNEaXNhYmxlZCgpOiBib29sZWFuIHsgcmV0dXJuICF0aGlzLmhhc1ByZXZpb3VzKCkgfHwgdGhpcy5kaXNhYmxlZDsgfVxyXG5cclxuICBzZWxlY3RQYWdlKHBhZ2VOdW1iZXI6IG51bWJlcik6IHZvaWQgeyB0aGlzLl91cGRhdGVQYWdlcyhwYWdlTnVtYmVyKTsgfVxyXG5cclxuICBuZ09uQ2hhbmdlcyhjaGFuZ2VzOiBTaW1wbGVDaGFuZ2VzKTogdm9pZCB7IHRoaXMuX3VwZGF0ZVBhZ2VzKHRoaXMucGFnZSk7IH1cclxuXHJcbiAgaXNFbGxpcHNpcyhwYWdlTnVtYmVyKTogYm9vbGVhbiB7IHJldHVybiBwYWdlTnVtYmVyID09PSAtMTsgfVxyXG5cclxuICAvKipcclxuICAgKiBBcHBlbmRzIGVsbGlwc2VzIGFuZCBmaXJzdC9sYXN0IHBhZ2UgbnVtYmVyIHRvIHRoZSBkaXNwbGF5ZWQgcGFnZXNcclxuICAgKi9cclxuICBwcml2YXRlIF9hcHBseUVsbGlwc2VzKHN0YXJ0OiBudW1iZXIsIGVuZDogbnVtYmVyKSB7XHJcbiAgICBpZiAodGhpcy5lbGxpcHNlcykge1xyXG4gICAgICBpZiAoc3RhcnQgPiAwKSB7XHJcbiAgICAgICAgLy8gVGhlIGZpcnN0IHBhZ2Ugd2lsbCBhbHdheXMgYmUgaW5jbHVkZWQuIElmIHRoZSBkaXNwbGF5ZWQgcmFuZ2VcclxuICAgICAgICAvLyBzdGFydHMgYWZ0ZXIgdGhlIHRoaXJkIHBhZ2UsIHRoZW4gYWRkIGVsbGlwc2lzLiBCdXQgaWYgdGhlIHJhbmdlXHJcbiAgICAgICAgLy8gc3RhcnRzIG9uIHRoZSB0aGlyZCBwYWdlLCB0aGVuIGFkZCB0aGUgc2Vjb25kIHBhZ2UgaW5zdGVhZCBvZlxyXG4gICAgICAgIC8vIGFuIGVsbGlwc2lzLCBiZWNhdXNlIHRoZSBlbGxpcHNpcyB3b3VsZCBvbmx5IGhpZGUgYSBzaW5nbGUgcGFnZS5cclxuICAgICAgICBpZiAoc3RhcnQgPiAyKSB7XHJcbiAgICAgICAgICB0aGlzLnBhZ2VzLnVuc2hpZnQoLTEpO1xyXG4gICAgICAgIH0gZWxzZSBpZiAoc3RhcnQgPT09IDIpIHtcclxuICAgICAgICAgIHRoaXMucGFnZXMudW5zaGlmdCgyKTtcclxuICAgICAgICB9XHJcbiAgICAgICAgdGhpcy5wYWdlcy51bnNoaWZ0KDEpO1xyXG4gICAgICB9XHJcbiAgICAgIGlmIChlbmQgPCB0aGlzLnBhZ2VDb3VudCkge1xyXG4gICAgICAgIC8vIFRoZSBsYXN0IHBhZ2Ugd2lsbCBhbHdheXMgYmUgaW5jbHVkZWQuIElmIHRoZSBkaXNwbGF5ZWQgcmFuZ2VcclxuICAgICAgICAvLyBlbmRzIGJlZm9yZSB0aGUgdGhpcmQtbGFzdCBwYWdlLCB0aGVuIGFkZCBlbGxpcHNpcy4gQnV0IGlmIHRoZSByYW5nZVxyXG4gICAgICAgIC8vIGVuZHMgb24gdGhpcmQtbGFzdCBwYWdlLCB0aGVuIGFkZCB0aGUgc2Vjb25kLWxhc3QgcGFnZSBpbnN0ZWFkIG9mXHJcbiAgICAgICAgLy8gYW4gZWxsaXBzaXMsIGJlY2F1c2UgdGhlIGVsbGlwc2lzIHdvdWxkIG9ubHkgaGlkZSBhIHNpbmdsZSBwYWdlLlxyXG4gICAgICAgIGlmIChlbmQgPCAodGhpcy5wYWdlQ291bnQgLSAyKSkge1xyXG4gICAgICAgICAgdGhpcy5wYWdlcy5wdXNoKC0xKTtcclxuICAgICAgICB9IGVsc2UgaWYgKGVuZCA9PT0gKHRoaXMucGFnZUNvdW50IC0gMikpIHtcclxuICAgICAgICAgIHRoaXMucGFnZXMucHVzaCh0aGlzLnBhZ2VDb3VudCAtIDEpO1xyXG4gICAgICAgIH1cclxuICAgICAgICB0aGlzLnBhZ2VzLnB1c2godGhpcy5wYWdlQ291bnQpO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAvKipcclxuICAgKiBSb3RhdGVzIHBhZ2UgbnVtYmVycyBiYXNlZCBvbiBtYXhTaXplIGl0ZW1zIHZpc2libGUuXHJcbiAgICogQ3VycmVudGx5IHNlbGVjdGVkIHBhZ2Ugc3RheXMgaW4gdGhlIG1pZGRsZTpcclxuICAgKlxyXG4gICAqIEV4LiBmb3Igc2VsZWN0ZWQgcGFnZSA9IDY6XHJcbiAgICogWzUsKjYqLDddIGZvciBtYXhTaXplID0gM1xyXG4gICAqIFs0LDUsKjYqLDddIGZvciBtYXhTaXplID0gNFxyXG4gICAqL1xyXG4gIHByaXZhdGUgX2FwcGx5Um90YXRpb24oKTogW251bWJlciwgbnVtYmVyXSB7XHJcbiAgICBsZXQgc3RhcnQgPSAwO1xyXG4gICAgbGV0IGVuZCA9IHRoaXMucGFnZUNvdW50O1xyXG4gICAgbGV0IGxlZnRPZmZzZXQgPSBNYXRoLmZsb29yKHRoaXMubWF4U2l6ZSAvIDIpO1xyXG4gICAgbGV0IHJpZ2h0T2Zmc2V0ID0gdGhpcy5tYXhTaXplICUgMiA9PT0gMCA/IGxlZnRPZmZzZXQgLSAxIDogbGVmdE9mZnNldDtcclxuXHJcbiAgICBpZiAodGhpcy5wYWdlIDw9IGxlZnRPZmZzZXQpIHtcclxuICAgICAgLy8gdmVyeSBiZWdpbm5pbmcsIG5vIHJvdGF0aW9uIC0+IFswLi5tYXhTaXplXVxyXG4gICAgICBlbmQgPSB0aGlzLm1heFNpemU7XHJcbiAgICB9IGVsc2UgaWYgKHRoaXMucGFnZUNvdW50IC0gdGhpcy5wYWdlIDwgbGVmdE9mZnNldCkge1xyXG4gICAgICAvLyB2ZXJ5IGVuZCwgbm8gcm90YXRpb24gLT4gW2xlbi1tYXhTaXplLi5sZW5dXHJcbiAgICAgIHN0YXJ0ID0gdGhpcy5wYWdlQ291bnQgLSB0aGlzLm1heFNpemU7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICAvLyByb3RhdGVcclxuICAgICAgc3RhcnQgPSB0aGlzLnBhZ2UgLSBsZWZ0T2Zmc2V0IC0gMTtcclxuICAgICAgZW5kID0gdGhpcy5wYWdlICsgcmlnaHRPZmZzZXQ7XHJcbiAgICB9XHJcblxyXG4gICAgcmV0dXJuIFtzdGFydCwgZW5kXTtcclxuICB9XHJcblxyXG4gIC8qKlxyXG4gICAqIFBhZ2luYXRlcyBwYWdlIG51bWJlcnMgYmFzZWQgb24gbWF4U2l6ZSBpdGVtcyBwZXIgcGFnZS5cclxuICAgKi9cclxuICBwcml2YXRlIF9hcHBseVBhZ2luYXRpb24oKTogW251bWJlciwgbnVtYmVyXSB7XHJcbiAgICBsZXQgcGFnZSA9IE1hdGguY2VpbCh0aGlzLnBhZ2UgLyB0aGlzLm1heFNpemUpIC0gMTtcclxuICAgIGxldCBzdGFydCA9IHBhZ2UgKiB0aGlzLm1heFNpemU7XHJcbiAgICBsZXQgZW5kID0gc3RhcnQgKyB0aGlzLm1heFNpemU7XHJcblxyXG4gICAgcmV0dXJuIFtzdGFydCwgZW5kXTtcclxuICB9XHJcblxyXG4gIHByaXZhdGUgX3NldFBhZ2VJblJhbmdlKG5ld1BhZ2VObykge1xyXG4gICAgY29uc3QgcHJldlBhZ2VObyA9IHRoaXMucGFnZTtcclxuICAgIHRoaXMucGFnZSA9IGdldFZhbHVlSW5SYW5nZShuZXdQYWdlTm8sIHRoaXMucGFnZUNvdW50LCAxKTtcclxuXHJcbiAgICBpZiAodGhpcy5wYWdlICE9PSBwcmV2UGFnZU5vICYmIGlzTnVtYmVyKHRoaXMuY29sbGVjdGlvblNpemUpKSB7XHJcbiAgICAgIHRoaXMucGFnZUNoYW5nZS5lbWl0KHRoaXMucGFnZSk7XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICBwcml2YXRlIF91cGRhdGVQYWdlcyhuZXdQYWdlOiBudW1iZXIpIHtcclxuICAgIHRoaXMucGFnZUNvdW50ID0gTWF0aC5jZWlsKHRoaXMuY29sbGVjdGlvblNpemUgLyB0aGlzLnBhZ2VTaXplKTtcclxuXHJcbiAgICBpZiAoIWlzTnVtYmVyKHRoaXMucGFnZUNvdW50KSkge1xyXG4gICAgICB0aGlzLnBhZ2VDb3VudCA9IDA7XHJcbiAgICB9XHJcblxyXG4gICAgLy8gZmlsbC1pbiBtb2RlbCBuZWVkZWQgdG8gcmVuZGVyIHBhZ2VzXHJcbiAgICB0aGlzLnBhZ2VzLmxlbmd0aCA9IDA7XHJcbiAgICBmb3IgKGxldCBpID0gMTsgaSA8PSB0aGlzLnBhZ2VDb3VudDsgaSsrKSB7XHJcbiAgICAgIHRoaXMucGFnZXMucHVzaChpKTtcclxuICAgIH1cclxuXHJcbiAgICAvLyBzZXQgcGFnZSB3aXRoaW4gMS4ubWF4IHJhbmdlXHJcbiAgICB0aGlzLl9zZXRQYWdlSW5SYW5nZShuZXdQYWdlKTtcclxuXHJcbiAgICAvLyBhcHBseSBtYXhTaXplIGlmIG5lY2Vzc2FyeVxyXG4gICAgaWYgKHRoaXMubWF4U2l6ZSA+IDAgJiYgdGhpcy5wYWdlQ291bnQgPiB0aGlzLm1heFNpemUpIHtcclxuICAgICAgbGV0IHN0YXJ0ID0gMDtcclxuICAgICAgbGV0IGVuZCA9IHRoaXMucGFnZUNvdW50O1xyXG5cclxuICAgICAgLy8gZWl0aGVyIHBhZ2luYXRpbmcgb3Igcm90YXRpbmcgcGFnZSBudW1iZXJzXHJcbiAgICAgIGlmICh0aGlzLnJvdGF0ZSkge1xyXG4gICAgICAgIFtzdGFydCwgZW5kXSA9IHRoaXMuX2FwcGx5Um90YXRpb24oKTtcclxuICAgICAgfSBlbHNlIHtcclxuICAgICAgICBbc3RhcnQsIGVuZF0gPSB0aGlzLl9hcHBseVBhZ2luYXRpb24oKTtcclxuICAgICAgfVxyXG5cclxuICAgICAgdGhpcy5wYWdlcyA9IHRoaXMucGFnZXMuc2xpY2Uoc3RhcnQsIGVuZCk7XHJcblxyXG4gICAgICAvLyBhZGRpbmcgZWxsaXBzZXNcclxuICAgICAgdGhpcy5fYXBwbHlFbGxpcHNlcyhzdGFydCwgZW5kKTtcclxuICAgIH1cclxuICB9XHJcbn1cclxuIl19

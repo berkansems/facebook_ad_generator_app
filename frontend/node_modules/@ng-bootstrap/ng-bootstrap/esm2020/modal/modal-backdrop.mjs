@@ -1,0 +1,45 @@
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { take } from 'rxjs/operators';
+import { ngbRunTransition } from '../util/transition/ngbTransition';
+import { reflow } from '../util/util';
+import * as i0 from "@angular/core";
+export class NgbModalBackdrop {
+    constructor(_el, _zone) {
+        this._el = _el;
+        this._zone = _zone;
+    }
+    ngOnInit() {
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            ngbRunTransition(this._zone, this._el.nativeElement, (element, animation) => {
+                if (animation) {
+                    reflow(element);
+                }
+                element.classList.add('show');
+            }, { animation: this.animation, runningTransition: 'continue' });
+        });
+    }
+    hide() {
+        return ngbRunTransition(this._zone, this._el.nativeElement, ({ classList }) => classList.remove('show'), { animation: this.animation, runningTransition: 'stop' });
+    }
+}
+NgbModalBackdrop.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbModalBackdrop, deps: [{ token: i0.ElementRef }, { token: i0.NgZone }], target: i0.ɵɵFactoryTarget.Component });
+NgbModalBackdrop.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.0.3", type: NgbModalBackdrop, selector: "ngb-modal-backdrop", inputs: { animation: "animation", backdropClass: "backdropClass" }, host: { properties: { "class": "\"modal-backdrop\" + (backdropClass ? \" \" + backdropClass : \"\")", "class.show": "!animation", "class.fade": "animation" }, styleAttribute: "z-index: 1050" }, ngImport: i0, template: '', isInline: true, encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbModalBackdrop, decorators: [{
+            type: Component,
+            args: [{
+                    selector: 'ngb-modal-backdrop',
+                    encapsulation: ViewEncapsulation.None,
+                    template: '',
+                    host: {
+                        '[class]': '"modal-backdrop" + (backdropClass ? " " + backdropClass : "")',
+                        '[class.show]': '!animation',
+                        '[class.fade]': 'animation',
+                        'style': 'z-index: 1050'
+                    }
+                }]
+        }], ctorParameters: function () { return [{ type: i0.ElementRef }, { type: i0.NgZone }]; }, propDecorators: { animation: [{
+                type: Input
+            }], backdropClass: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kYWwtYmFja2Ryb3AuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvbW9kYWwvbW9kYWwtYmFja2Ryb3AudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFDLFNBQVMsRUFBYyxLQUFLLEVBQWtCLGlCQUFpQixFQUFDLE1BQU0sZUFBZSxDQUFDO0FBRzlGLE9BQU8sRUFBQyxJQUFJLEVBQUMsTUFBTSxnQkFBZ0IsQ0FBQztBQUVwQyxPQUFPLEVBQUMsZ0JBQWdCLEVBQUMsTUFBTSxrQ0FBa0MsQ0FBQztBQUNsRSxPQUFPLEVBQUMsTUFBTSxFQUFDLE1BQU0sY0FBYyxDQUFDOztBQWFwQyxNQUFNLE9BQU8sZ0JBQWdCO0lBSTNCLFlBQW9CLEdBQTRCLEVBQVUsS0FBYTtRQUFuRCxRQUFHLEdBQUgsR0FBRyxDQUF5QjtRQUFVLFVBQUssR0FBTCxLQUFLLENBQVE7SUFBRyxDQUFDO0lBRTNFLFFBQVE7UUFDTixJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVEsQ0FBQyxZQUFZLEVBQUUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsU0FBUyxDQUFDLEdBQUcsRUFBRTtZQUM5RCxnQkFBZ0IsQ0FBQyxJQUFJLENBQUMsS0FBSyxFQUFFLElBQUksQ0FBQyxHQUFHLENBQUMsYUFBYSxFQUFFLENBQUMsT0FBb0IsRUFBRSxTQUFrQixFQUFFLEVBQUU7Z0JBQ2hHLElBQUksU0FBUyxFQUFFO29CQUNiLE1BQU0sQ0FBQyxPQUFPLENBQUMsQ0FBQztpQkFDakI7Z0JBQ0QsT0FBTyxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7WUFDaEMsQ0FBQyxFQUFFLEVBQUMsU0FBUyxFQUFFLElBQUksQ0FBQyxTQUFTLEVBQUUsaUJBQWlCLEVBQUUsVUFBVSxFQUFDLENBQUMsQ0FBQztRQUNqRSxDQUFDLENBQUMsQ0FBQztJQUNMLENBQUM7SUFFRCxJQUFJO1FBQ0YsT0FBTyxnQkFBZ0IsQ0FDbkIsSUFBSSxDQUFDLEtBQUssRUFBRSxJQUFJLENBQUMsR0FBRyxDQUFDLGFBQWEsRUFBRSxDQUFDLEVBQUMsU0FBUyxFQUFDLEVBQUUsRUFBRSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLEVBQzdFLEVBQUMsU0FBUyxFQUFFLElBQUksQ0FBQyxTQUFTLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSxFQUFDLENBQUMsQ0FBQztJQUM5RCxDQUFDOzs2R0FyQlUsZ0JBQWdCO2lHQUFoQixnQkFBZ0IsZ1VBUmpCLEVBQUU7MkZBUUQsZ0JBQWdCO2tCQVg1QixTQUFTO21CQUFDO29CQUNULFFBQVEsRUFBRSxvQkFBb0I7b0JBQzlCLGFBQWEsRUFBRSxpQkFBaUIsQ0FBQyxJQUFJO29CQUNyQyxRQUFRLEVBQUUsRUFBRTtvQkFDWixJQUFJLEVBQUU7d0JBQ0osU0FBUyxFQUFFLCtEQUErRDt3QkFDMUUsY0FBYyxFQUFFLFlBQVk7d0JBQzVCLGNBQWMsRUFBRSxXQUFXO3dCQUMzQixPQUFPLEVBQUUsZUFBZTtxQkFDekI7aUJBQ0Y7c0hBRVUsU0FBUztzQkFBakIsS0FBSztnQkFDRyxhQUFhO3NCQUFyQixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtDb21wb25lbnQsIEVsZW1lbnRSZWYsIElucHV0LCBOZ1pvbmUsIE9uSW5pdCwgVmlld0VuY2Fwc3VsYXRpb259IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5cclxuaW1wb3J0IHtPYnNlcnZhYmxlfSBmcm9tICdyeGpzJztcclxuaW1wb3J0IHt0YWtlfSBmcm9tICdyeGpzL29wZXJhdG9ycyc7XHJcblxyXG5pbXBvcnQge25nYlJ1blRyYW5zaXRpb259IGZyb20gJy4uL3V0aWwvdHJhbnNpdGlvbi9uZ2JUcmFuc2l0aW9uJztcclxuaW1wb3J0IHtyZWZsb3d9IGZyb20gJy4uL3V0aWwvdXRpbCc7XHJcblxyXG5AQ29tcG9uZW50KHtcclxuICBzZWxlY3RvcjogJ25nYi1tb2RhbC1iYWNrZHJvcCcsXHJcbiAgZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uTm9uZSxcclxuICB0ZW1wbGF0ZTogJycsXHJcbiAgaG9zdDoge1xyXG4gICAgJ1tjbGFzc10nOiAnXCJtb2RhbC1iYWNrZHJvcFwiICsgKGJhY2tkcm9wQ2xhc3MgPyBcIiBcIiArIGJhY2tkcm9wQ2xhc3MgOiBcIlwiKScsXHJcbiAgICAnW2NsYXNzLnNob3ddJzogJyFhbmltYXRpb24nLFxyXG4gICAgJ1tjbGFzcy5mYWRlXSc6ICdhbmltYXRpb24nLFxyXG4gICAgJ3N0eWxlJzogJ3otaW5kZXg6IDEwNTAnXHJcbiAgfVxyXG59KVxyXG5leHBvcnQgY2xhc3MgTmdiTW9kYWxCYWNrZHJvcCBpbXBsZW1lbnRzIE9uSW5pdCB7XHJcbiAgQElucHV0KCkgYW5pbWF0aW9uOiBib29sZWFuO1xyXG4gIEBJbnB1dCgpIGJhY2tkcm9wQ2xhc3M6IHN0cmluZztcclxuXHJcbiAgY29uc3RydWN0b3IocHJpdmF0ZSBfZWw6IEVsZW1lbnRSZWY8SFRNTEVsZW1lbnQ+LCBwcml2YXRlIF96b25lOiBOZ1pvbmUpIHt9XHJcblxyXG4gIG5nT25Jbml0KCkge1xyXG4gICAgdGhpcy5fem9uZS5vblN0YWJsZS5hc09ic2VydmFibGUoKS5waXBlKHRha2UoMSkpLnN1YnNjcmliZSgoKSA9PiB7XHJcbiAgICAgIG5nYlJ1blRyYW5zaXRpb24odGhpcy5fem9uZSwgdGhpcy5fZWwubmF0aXZlRWxlbWVudCwgKGVsZW1lbnQ6IEhUTUxFbGVtZW50LCBhbmltYXRpb246IGJvb2xlYW4pID0+IHtcclxuICAgICAgICBpZiAoYW5pbWF0aW9uKSB7XHJcbiAgICAgICAgICByZWZsb3coZWxlbWVudCk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGVsZW1lbnQuY2xhc3NMaXN0LmFkZCgnc2hvdycpO1xyXG4gICAgICB9LCB7YW5pbWF0aW9uOiB0aGlzLmFuaW1hdGlvbiwgcnVubmluZ1RyYW5zaXRpb246ICdjb250aW51ZSd9KTtcclxuICAgIH0pO1xyXG4gIH1cclxuXHJcbiAgaGlkZSgpOiBPYnNlcnZhYmxlPHZvaWQ+IHtcclxuICAgIHJldHVybiBuZ2JSdW5UcmFuc2l0aW9uKFxyXG4gICAgICAgIHRoaXMuX3pvbmUsIHRoaXMuX2VsLm5hdGl2ZUVsZW1lbnQsICh7Y2xhc3NMaXN0fSkgPT4gY2xhc3NMaXN0LnJlbW92ZSgnc2hvdycpLFxyXG4gICAgICAgIHthbmltYXRpb246IHRoaXMuYW5pbWF0aW9uLCBydW5uaW5nVHJhbnNpdGlvbjogJ3N0b3AnfSk7XHJcbiAgfVxyXG59XHJcbiJdfQ==

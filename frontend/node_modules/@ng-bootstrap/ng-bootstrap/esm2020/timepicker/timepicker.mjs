@@ -1,0 +1,326 @@
+import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isInteger, isNumber, padNumber, toInteger } from '../util/util';
+import { NgbTime } from './ngb-time';
+import * as i0 from "@angular/core";
+import * as i1 from "./timepicker-config";
+import * as i2 from "./ngb-time-adapter";
+import * as i3 from "./timepicker-i18n";
+import * as i4 from "@angular/common";
+const FILTER_REGEX = /[^0-9]/g;
+/**
+ * A directive that helps with wth picking hours, minutes and seconds.
+ */
+export class NgbTimepicker {
+    constructor(_config, _ngbTimeAdapter, _cd, i18n) {
+        this._config = _config;
+        this._ngbTimeAdapter = _ngbTimeAdapter;
+        this._cd = _cd;
+        this.i18n = i18n;
+        this.onChange = (_) => { };
+        this.onTouched = () => { };
+        this.meridian = _config.meridian;
+        this.spinners = _config.spinners;
+        this.seconds = _config.seconds;
+        this.hourStep = _config.hourStep;
+        this.minuteStep = _config.minuteStep;
+        this.secondStep = _config.secondStep;
+        this.disabled = _config.disabled;
+        this.readonlyInputs = _config.readonlyInputs;
+        this.size = _config.size;
+    }
+    /**
+     * The number of hours to add/subtract when clicking hour spinners.
+     */
+    set hourStep(step) {
+        this._hourStep = isInteger(step) ? step : this._config.hourStep;
+    }
+    get hourStep() { return this._hourStep; }
+    /**
+     * The number of minutes to add/subtract when clicking minute spinners.
+     */
+    set minuteStep(step) {
+        this._minuteStep = isInteger(step) ? step : this._config.minuteStep;
+    }
+    get minuteStep() { return this._minuteStep; }
+    /**
+     * The number of seconds to add/subtract when clicking second spinners.
+     */
+    set secondStep(step) {
+        this._secondStep = isInteger(step) ? step : this._config.secondStep;
+    }
+    get secondStep() { return this._secondStep; }
+    writeValue(value) {
+        const structValue = this._ngbTimeAdapter.fromModel(value);
+        this.model = structValue ? new NgbTime(structValue.hour, structValue.minute, structValue.second) : new NgbTime();
+        if (!this.seconds && (!structValue || !isNumber(structValue.second))) {
+            this.model.second = 0;
+        }
+        this._cd.markForCheck();
+    }
+    registerOnChange(fn) { this.onChange = fn; }
+    registerOnTouched(fn) { this.onTouched = fn; }
+    setDisabledState(isDisabled) { this.disabled = isDisabled; }
+    changeHour(step) {
+        this.model.changeHour(step);
+        this.propagateModelChange();
+    }
+    changeMinute(step) {
+        this.model.changeMinute(step);
+        this.propagateModelChange();
+    }
+    changeSecond(step) {
+        this.model.changeSecond(step);
+        this.propagateModelChange();
+    }
+    updateHour(newVal) {
+        const isPM = this.model.hour >= 12;
+        const enteredHour = toInteger(newVal);
+        if (this.meridian && (isPM && enteredHour < 12 || !isPM && enteredHour === 12)) {
+            this.model.updateHour(enteredHour + 12);
+        }
+        else {
+            this.model.updateHour(enteredHour);
+        }
+        this.propagateModelChange();
+    }
+    updateMinute(newVal) {
+        this.model.updateMinute(toInteger(newVal));
+        this.propagateModelChange();
+    }
+    updateSecond(newVal) {
+        this.model.updateSecond(toInteger(newVal));
+        this.propagateModelChange();
+    }
+    toggleMeridian() {
+        if (this.meridian) {
+            this.changeHour(12);
+        }
+    }
+    formatInput(input) { input.value = input.value.replace(FILTER_REGEX, ''); }
+    formatHour(value) {
+        if (isNumber(value)) {
+            if (this.meridian) {
+                return padNumber(value % 12 === 0 ? 12 : value % 12);
+            }
+            else {
+                return padNumber(value % 24);
+            }
+        }
+        else {
+            return padNumber(NaN);
+        }
+    }
+    formatMinSec(value) { return padNumber(isNumber(value) ? value : NaN); }
+    handleBlur() { this.onTouched(); }
+    get isSmallSize() { return this.size === 'small'; }
+    get isLargeSize() { return this.size === 'large'; }
+    ngOnChanges(changes) {
+        if (changes['seconds'] && !this.seconds && this.model && !isNumber(this.model.second)) {
+            this.model.second = 0;
+            this.propagateModelChange(false);
+        }
+    }
+    propagateModelChange(touched = true) {
+        if (touched) {
+            this.onTouched();
+        }
+        if (this.model.isValid(this.seconds)) {
+            this.onChange(this._ngbTimeAdapter.toModel({ hour: this.model.hour, minute: this.model.minute, second: this.model.second }));
+        }
+        else {
+            this.onChange(this._ngbTimeAdapter.toModel(null));
+        }
+    }
+}
+NgbTimepicker.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbTimepicker, deps: [{ token: i1.NgbTimepickerConfig }, { token: i2.NgbTimeAdapter }, { token: i0.ChangeDetectorRef }, { token: i3.NgbTimepickerI18n }], target: i0.ɵɵFactoryTarget.Component });
+NgbTimepicker.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", version: "13.0.3", type: NgbTimepicker, selector: "ngb-timepicker", inputs: { meridian: "meridian", spinners: "spinners", seconds: "seconds", hourStep: "hourStep", minuteStep: "minuteStep", secondStep: "secondStep", readonlyInputs: "readonlyInputs", size: "size" }, providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgbTimepicker), multi: true }], usesOnChanges: true, ngImport: i0, template: `
+    <fieldset [disabled]="disabled" [class.disabled]="disabled">
+      <div class="ngb-tp">
+        <div class="ngb-tp-input-container ngb-tp-hour">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeHour(hourStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-hours">Increment hours</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize"
+            [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="HH" i18n-placeholder="@@ngb.timepicker.HH"
+            [value]="formatHour(model?.hour)" (change)="updateHour($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Hours" i18n-aria-label="@@ngb.timepicker.hours"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeHour(hourStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeHour(-hourStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeHour(-hourStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.decrement-hours">Decrement hours</span>
+          </button>
+        </div>
+        <div class="ngb-tp-spacer">:</div>
+        <div class="ngb-tp-input-container ngb-tp-minute">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeMinute(minuteStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-minutes">Increment minutes</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize" [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="MM" i18n-placeholder="@@ngb.timepicker.MM"
+            [value]="formatMinSec(model?.minute)" (change)="updateMinute($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Minutes" i18n-aria-label="@@ngb.timepicker.minutes"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeMinute(minuteStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeMinute(-minuteStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeMinute(-minuteStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"  [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only"  i18n="@@ngb.timepicker.decrement-minutes">Decrement minutes</span>
+          </button>
+        </div>
+        <div *ngIf="seconds" class="ngb-tp-spacer">:</div>
+        <div *ngIf="seconds" class="ngb-tp-input-container ngb-tp-second">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeSecond(secondStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-seconds">Increment seconds</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize" [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="SS" i18n-placeholder="@@ngb.timepicker.SS"
+            [value]="formatMinSec(model?.second)" (change)="updateSecond($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Seconds" i18n-aria-label="@@ngb.timepicker.seconds"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeSecond(secondStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeSecond(-secondStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeSecond(-secondStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"  [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.decrement-seconds">Decrement seconds</span>
+          </button>
+        </div>
+        <div *ngIf="meridian" class="ngb-tp-spacer"></div>
+        <div *ngIf="meridian" class="ngb-tp-meridian">
+          <button type="button" class="btn btn-outline-primary" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"
+            [disabled]="disabled" [class.disabled]="disabled"
+                  (click)="toggleMeridian()">
+            <ng-container *ngIf="model && model.hour >= 12; else am"
+                          i18n="@@ngb.timepicker.PM">{{ i18n.getAfternoonPeriod() }}</ng-container>
+            <ng-template #am i18n="@@ngb.timepicker.AM">{{ i18n.getMorningPeriod() }}</ng-template>
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  `, isInline: true, styles: ["ngb-timepicker{font-size:1rem}.ngb-tp{display:flex;align-items:center}.ngb-tp-input-container{width:4em}.ngb-tp-chevron:before{border-style:solid;border-width:.29em .29em 0 0;content:\"\";display:inline-block;height:.69em;left:.05em;position:relative;top:.15em;transform:rotate(-45deg);vertical-align:middle;width:.69em}.ngb-tp-chevron.bottom:before{top:-.3em;transform:rotate(135deg)}.ngb-tp-input{text-align:center}.ngb-tp-hour,.ngb-tp-minute,.ngb-tp-second,.ngb-tp-meridian{display:flex;flex-direction:column;align-items:center;justify-content:space-around}.ngb-tp-spacer{width:1em;text-align:center}\n"], directives: [{ type: i4.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }], encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.3", ngImport: i0, type: NgbTimepicker, decorators: [{
+            type: Component,
+            args: [{ selector: 'ngb-timepicker', encapsulation: ViewEncapsulation.None, template: `
+    <fieldset [disabled]="disabled" [class.disabled]="disabled">
+      <div class="ngb-tp">
+        <div class="ngb-tp-input-container ngb-tp-hour">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeHour(hourStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-hours">Increment hours</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize"
+            [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="HH" i18n-placeholder="@@ngb.timepicker.HH"
+            [value]="formatHour(model?.hour)" (change)="updateHour($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Hours" i18n-aria-label="@@ngb.timepicker.hours"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeHour(hourStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeHour(-hourStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeHour(-hourStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.decrement-hours">Decrement hours</span>
+          </button>
+        </div>
+        <div class="ngb-tp-spacer">:</div>
+        <div class="ngb-tp-input-container ngb-tp-minute">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeMinute(minuteStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-minutes">Increment minutes</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize" [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="MM" i18n-placeholder="@@ngb.timepicker.MM"
+            [value]="formatMinSec(model?.minute)" (change)="updateMinute($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Minutes" i18n-aria-label="@@ngb.timepicker.minutes"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeMinute(minuteStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeMinute(-minuteStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeMinute(-minuteStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"  [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only"  i18n="@@ngb.timepicker.decrement-minutes">Decrement minutes</span>
+          </button>
+        </div>
+        <div *ngIf="seconds" class="ngb-tp-spacer">:</div>
+        <div *ngIf="seconds" class="ngb-tp-input-container ngb-tp-second">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeSecond(secondStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize" [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.increment-seconds">Increment seconds</span>
+          </button>
+          <input type="text" class="ngb-tp-input form-control" [class.form-control-sm]="isSmallSize" [class.form-control-lg]="isLargeSize"
+            maxlength="2" inputmode="numeric" placeholder="SS" i18n-placeholder="@@ngb.timepicker.SS"
+            [value]="formatMinSec(model?.second)" (change)="updateSecond($any($event).target.value)"
+            [readOnly]="readonlyInputs" [disabled]="disabled" aria-label="Seconds" i18n-aria-label="@@ngb.timepicker.seconds"
+            (blur)="handleBlur()"
+            (input)="formatInput($any($event).target)"
+            (keydown.ArrowUp)="changeSecond(secondStep); $event.preventDefault()"
+            (keydown.ArrowDown)="changeSecond(-secondStep); $event.preventDefault()">
+          <button *ngIf="spinners" tabindex="-1" type="button" (click)="changeSecond(-secondStep)"
+            class="btn btn-link" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"  [class.disabled]="disabled"
+            [disabled]="disabled">
+            <span class="chevron ngb-tp-chevron bottom"></span>
+            <span class="sr-only" i18n="@@ngb.timepicker.decrement-seconds">Decrement seconds</span>
+          </button>
+        </div>
+        <div *ngIf="meridian" class="ngb-tp-spacer"></div>
+        <div *ngIf="meridian" class="ngb-tp-meridian">
+          <button type="button" class="btn btn-outline-primary" [class.btn-sm]="isSmallSize" [class.btn-lg]="isLargeSize"
+            [disabled]="disabled" [class.disabled]="disabled"
+                  (click)="toggleMeridian()">
+            <ng-container *ngIf="model && model.hour >= 12; else am"
+                          i18n="@@ngb.timepicker.PM">{{ i18n.getAfternoonPeriod() }}</ng-container>
+            <ng-template #am i18n="@@ngb.timepicker.AM">{{ i18n.getMorningPeriod() }}</ng-template>
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  `, providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgbTimepicker), multi: true }], styles: ["ngb-timepicker{font-size:1rem}.ngb-tp{display:flex;align-items:center}.ngb-tp-input-container{width:4em}.ngb-tp-chevron:before{border-style:solid;border-width:.29em .29em 0 0;content:\"\";display:inline-block;height:.69em;left:.05em;position:relative;top:.15em;transform:rotate(-45deg);vertical-align:middle;width:.69em}.ngb-tp-chevron.bottom:before{top:-.3em;transform:rotate(135deg)}.ngb-tp-input{text-align:center}.ngb-tp-hour,.ngb-tp-minute,.ngb-tp-second,.ngb-tp-meridian{display:flex;flex-direction:column;align-items:center;justify-content:space-around}.ngb-tp-spacer{width:1em;text-align:center}\n"] }]
+        }], ctorParameters: function () { return [{ type: i1.NgbTimepickerConfig }, { type: i2.NgbTimeAdapter }, { type: i0.ChangeDetectorRef }, { type: i3.NgbTimepickerI18n }]; }, propDecorators: { meridian: [{
+                type: Input
+            }], spinners: [{
+                type: Input
+            }], seconds: [{
+                type: Input
+            }], hourStep: [{
+                type: Input
+            }], minuteStep: [{
+                type: Input
+            }], secondStep: [{
+                type: Input
+            }], readonlyInputs: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGltZXBpY2tlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy90aW1lcGlja2VyL3RpbWVwaWNrZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUVMLFNBQVMsRUFDVCxVQUFVLEVBQ1YsS0FBSyxFQUdMLGlCQUFpQixFQUNsQixNQUFNLGVBQWUsQ0FBQztBQUN2QixPQUFPLEVBQXVCLGlCQUFpQixFQUFDLE1BQU0sZ0JBQWdCLENBQUM7QUFFdkUsT0FBTyxFQUFDLFNBQVMsRUFBRSxRQUFRLEVBQUUsU0FBUyxFQUFFLFNBQVMsRUFBQyxNQUFNLGNBQWMsQ0FBQztBQUN2RSxPQUFPLEVBQUMsT0FBTyxFQUFDLE1BQU0sWUFBWSxDQUFDOzs7Ozs7QUFLbkMsTUFBTSxZQUFZLEdBQUcsU0FBUyxDQUFDO0FBRS9COztHQUVHO0FBNEZILE1BQU0sT0FBTyxhQUFhO0lBa0V4QixZQUNxQixPQUE0QixFQUFVLGVBQW9DLEVBQ25GLEdBQXNCLEVBQVMsSUFBdUI7UUFEN0MsWUFBTyxHQUFQLE9BQU8sQ0FBcUI7UUFBVSxvQkFBZSxHQUFmLGVBQWUsQ0FBcUI7UUFDbkYsUUFBRyxHQUFILEdBQUcsQ0FBbUI7UUFBUyxTQUFJLEdBQUosSUFBSSxDQUFtQjtRQVlsRSxhQUFRLEdBQUcsQ0FBQyxDQUFNLEVBQUUsRUFBRSxHQUFFLENBQUMsQ0FBQztRQUMxQixjQUFTLEdBQUcsR0FBRyxFQUFFLEdBQUUsQ0FBQyxDQUFDO1FBWm5CLElBQUksQ0FBQyxRQUFRLEdBQUcsT0FBTyxDQUFDLFFBQVEsQ0FBQztRQUNqQyxJQUFJLENBQUMsUUFBUSxHQUFHLE9BQU8sQ0FBQyxRQUFRLENBQUM7UUFDakMsSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUMsT0FBTyxDQUFDO1FBQy9CLElBQUksQ0FBQyxRQUFRLEdBQUcsT0FBTyxDQUFDLFFBQVEsQ0FBQztRQUNqQyxJQUFJLENBQUMsVUFBVSxHQUFHLE9BQU8sQ0FB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QUcsRUFBRSxjQUFjLENBQUMsRUFBRSxLQUFLLEVBQUUsSUFBSSxFQUFDLENBQUM7dU1BZ0IzRixRQUFRO3NCQUFoQixLQUFLO2dCQUtHLFFBQVE7c0JBQWhCLEtBQUs7Z0JBS0csT0FBTztzQkFBZixLQUFLO2dCQU1GLFFBQVE7c0JBRFgsS0FBSztnQkFXRixVQUFVO3NCQURiLEtBQUs7Z0JBV0YsVUFBVTtzQkFEYixLQUFLO2dCQVVHLGNBQWM7c0JBQXRCLEtBQUs7Z0JBS0csSUFBSTtzQkFBWixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtcclxuICBDaGFuZ2VEZXRlY3RvclJlZixcclxuICBDb21wb25lbnQsXHJcbiAgZm9yd2FyZFJlZixcclxuICBJbnB1dCxcclxuICBPbkNoYW5nZXMsXHJcbiAgU2ltcGxlQ2hhbmdlcyxcclxuICBWaWV3RW5jYXBzdWxhdGlvblxyXG59IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5pbXBvcnQge0NvbnRyb2xWYWx1ZUFjY2Vzc29yLCBOR19WQUxVRV9BQ0NFU1NPUn0gZnJvbSAnQGFuZ3VsYXIvZm9ybXMnO1xyXG5cclxuaW1wb3J0IHtpc0ludGVnZXIsIGlzTnVtYmVyLCBwYWROdW1iZXIsIHRvSW50ZWdlcn0gZnJvbSAnLi4vdXRpbC91dGlsJztcclxuaW1wb3J0IHtOZ2JUaW1lfSBmcm9tICcuL25nYi10aW1lJztcclxuaW1wb3J0IHtOZ2JUaW1lcGlja2VyQ29uZmlnfSBmcm9tICcuL3RpbWVwaWNrZXItY29uZmlnJztcclxuaW1wb3J0IHtOZ2JUaW1lQWRhcHRlcn0gZnJvbSAnLi9uZ2ItdGltZS1hZGFwdGVyJztcclxuaW1wb3J0IHtOZ2JUaW1lcGlja2VySTE4bn0gZnJvbSAnLi90aW1lcGlja2VyLWkxOG4nO1xyXG5cclxuY29uc3QgRklMVEVSX1JFR0VYID0gL1teMC05XS9nO1xyXG5cclxuLyoqXHJcbiAqIEEgZGlyZWN0aXZlIHRoYXQgaGVscHMgd2l0aCB3dGggcGlja2luZyBob3VycywgbWludXRlcyBhbmQgc2Vjb25kcy5cclxuICovXHJcbkBDb21wb25lbnQoe1xyXG4gIHNlbGVjdG9yOiAnbmdiLXRpbWVwaWNrZXInLFxyXG4gIGVuY2Fwc3VsYXRpb246IFZpZXdFbmNhcHN1bGF0aW9uLk5vbmUsXHJcbiAgc3R5bGVVcmxzOiBbJy4vdGltZXBpY2tlci5zY3NzJ10sXHJcbiAgdGVtcGxhdGU6IGBcclxuICAgIDxmaWVsZHNldCBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIiBbY2xhc3MuZGlzYWJsZWRdPVwiZGlzYWJsZWRcIj5cclxuICAgICAgPGRpdiBjbGFzcz1cIm5nYi10cFwiPlxyXG4gICAgICAgIDxkaXYgY2xhc3M9XCJuZ2ItdHAtaW5wdXQtY29udGFpbmVyIG5nYi10cC1ob3VyXCI+XHJcbiAgICAgICAgICA8YnV0dG9uICpuZ0lmPVwic3Bpbm5lcnNcIiB0YWJpbmRleD1cIi0xXCIgdHlwZT1cImJ1dHRvblwiIChjbGljayk9XCJjaGFuZ2VIb3VyKGhvdXJTdGVwKVwiXHJcbiAgICAgICAgICAgIGNsYXNzPVwiYnRuIGJ0bi1saW5rXCIgW2NsYXNzLmJ0bi1zbV09XCJpc1NtYWxsU2l6ZVwiIFtjbGFzcy5idG4tbGddPVwiaXNMYXJnZVNpemVcIiBbY2xhc3MuZGlzYWJsZWRdPVwiZGlzYWJsZWRcIlxyXG4gICAgICAgICAgICBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJjaGV2cm9uIG5nYi10cC1jaGV2cm9uXCI+PC9zcGFuPlxyXG4gICAgICAgICAgICA8c3BhbiBjbGFzcz1cInNyLW9ubHlcIiBpMThuPVwiQEBuZ2IudGltZXBpY2tlci5pbmNyZW1lbnQtaG91cnNcIj5JbmNyZW1lbnQgaG91cnM8L3NwYW4+XHJcbiAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICAgIDxpbnB1dCB0eXBlPVwidGV4dFwiIGNsYXNzPVwibmdiLXRwLWlucHV0IGZvcm0tY29udHJvbFwiIFtjbGFzcy5mb3JtLWNvbnRyb2wtc21dPVwiaXNTbWFsbFNpemVcIlxyXG4gICAgICAgICAgICBbY2xhc3MuZm9ybS1jb250cm9sLWxnXT1cImlzTGFyZ2VTaXplXCJcclxuICAgICAgICAgICAgbWF4bGVuZ3RoPVwiMlwiIGlucHV0bW9kZT1cIm51bWVyaWNcIiBwbGFjZWhvbGRlcj1cIkhIXCIgaTE4bi1wbGFjZWhvbGRlcj1cIkBAbmdiLnRpbWVwaWNrZXIuSEhcIlxyXG4gICAgICAgICAgICBbdmFsdWVdPVwiZm9ybWF0SG91cihtb2RlbD8uaG91cilcIiAoY2hhbmdlKT1cInVwZGF0ZUhvdXIoJGFueSgkZXZlbnQpLnRhcmdldC52YWx1ZSlcIlxyXG4gICAgICAgICAgICBbcmVhZE9ubHldPVwicmVhZG9ubHlJbnB1dHNcIiBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIiBhcmlhLWxhYmVsPVwiSG91cnNcIiBpMThuLWFyaWEtbGFiZWw9XCJAQG5nYi50aW1lcGlja2VyLmhvdXJzXCJcclxuICAgICAgICAgICAgKGJsdXIpPVwiaGFuZGxlQmx1cigpXCJcclxuICAgICAgICAgICAgKGlucHV0KT1cImZvcm1hdElucHV0KCRhbnkoJGV2ZW50KS50YXJnZXQpXCJcclxuICAgICAgICAgICAgKGtleWRvd24uQXJyb3dVcCk9XCJjaGFuZ2VIb3VyKGhvdXJTdGVwKTsgJGV2ZW50LnByZXZlbnREZWZhdWx0KClcIlxyXG4gICAgICAgICAgICAoa2V5ZG93bi5BcnJvd0Rvd24pPVwiY2hhbmdlSG91cigtaG91clN0ZXApOyAkZXZlbnQucHJldmVudERlZmF1bHQoKVwiPlxyXG4gICAgICAgICAgPGJ1dHRvbiAqbmdJZj1cInNwaW5uZXJzXCIgdGFiaW5kZXg9XCItMVwiIHR5cGU9XCJidXR0b25cIiAoY2xpY2spPVwiY2hhbmdlSG91cigtaG91clN0ZXApXCJcclxuICAgICAgICAgICAgY2xhc3M9XCJidG4gYnRuLWxpbmtcIiBbY2xhc3MuYnRuLXNtXT1cImlzU21hbGxTaXplXCIgW2NsYXNzLmJ0bi1sZ109XCJpc0xhcmdlU2l6ZVwiIFtjbGFzcy5kaXNhYmxlZF09XCJkaXNhYmxlZFwiXHJcbiAgICAgICAgICAgIFtkaXNhYmxlZF09XCJkaXNhYmxlZFwiPlxyXG4gICAgICAgICAgICA8c3BhbiBjbGFzcz1cImNoZXZyb24gbmdiLXRwLWNoZXZyb24gYm90dG9tXCI+PC9zcGFuPlxyXG4gICAgICAgICAgICA8c3BhbiBjbGFzcz1cInNyLW9ubHlcIiBpMThuPVwiQEBuZ2IudGltZXBpY2tlci5kZWNyZW1lbnQtaG91cnNcIj5EZWNyZW1lbnQgaG91cnM8L3NwYW4+XHJcbiAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8ZGl2IGNsYXNzPVwibmdiLXRwLXNwYWNlclwiPjo8L2Rpdj5cclxuICAgICAgICA8ZGl2IGNsYXNzPVwibmdiLXRwLWlucHV0LWNvbnRhaW5lciBuZ2ItdHAtbWludXRlXCI+XHJcbiAgICAgICAgICA8YnV0dG9uICpuZ0lmPVwic3Bpbm5lcnNcIiB0YWJpbmRleD1cIi0xXCIgdHlwZT1cImJ1dHRvblwiIChjbGljayk9XCJjaGFuZ2VNaW51dGUobWludXRlU3RlcClcIlxyXG4gICAgICAgICAgICBjbGFzcz1cImJ0biBidG4tbGlua1wiIFtjbGFzcy5idG4tc21dPVwiaXNTbWFsbFNpemVcIiBbY2xhc3MuYnRuLWxnXT1cImlzTGFyZ2VTaXplXCIgW2NsYXNzLmRpc2FibGVkXT1cImRpc2FibGVkXCJcclxuICAgICAgICAgICAgW2Rpc2FibGVkXT1cImRpc2FibGVkXCI+XHJcbiAgICAgICAgICAgIDxzcGFuIGNsYXNzPVwiY2hldnJvbiBuZ2ItdHAtY2hldnJvblwiPjwvc3Bhbj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJzci1vbmx5XCIgaTE4bj1cIkBAbmdiLnRpbWVwaWNrZXIuaW5jcmVtZW50LW1pbnV0ZXNcIj5JbmNyZW1lbnQgbWludXRlczwvc3Bhbj5cclxuICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgPGlucHV0IHR5cGU9XCJ0ZXh0XCIgY2xhc3M9XCJuZ2ItdHAtaW5wdXQgZm9ybS1jb250cm9sXCIgW2NsYXNzLmZvcm0tY29udHJvbC1zbV09XCJpc1NtYWxsU2l6ZVwiIFtjbGFzcy5mb3JtLWNvbnRyb2wtbGddPVwiaXNMYXJnZVNpemVcIlxyXG4gICAgICAgICAgICBtYXhsZW5ndGg9XCIyXCIgaW5wdXRtb2RlPVwibnVtZXJpY1wiIHBsYWNlaG9sZGVyPVwiTU1cIiBpMThuLXBsYWNlaG9sZGVyPVwiQEBuZ2IudGltZXBpY2tlci5NTVwiXHJcbiAgICAgICAgICAgIFt2YWx1ZV09XCJmb3JtYXRNaW5TZWMobW9kZWw/Lm1pbnV0ZSlcIiAoY2hhbmdlKT1cInVwZGF0ZU1pbnV0ZSgkYW55KCRldmVudCkudGFyZ2V0LnZhbHVlKVwiXHJcbiAgICAgICAgICAgIFtyZWFkT25seV09XCJyZWFkb25seUlucHV0c1wiIFtkaXNhYmxlZF09XCJkaXNhYmxlZFwiIGFyaWEtbGFiZWw9XCJNaW51dGVzXCIgaTE4bi1hcmlhLWxhYmVsPVwiQEBuZ2IudGltZXBpY2tlci5taW51dGVzXCJcclxuICAgICAgICAgICAgKGJsdXIpPVwiaGFuZGxlQmx1cigpXCJcclxuICAgICAgICAgICAgKGlucHV0KT1cImZvcm1hdElucHV0KCRhbnkoJGV2ZW50KS50YXJnZXQpXCJcclxuICAgICAgICAgICAgKGtleWRvd24uQXJyb3dVcCk9XCJjaGFuZ2VNaW51dGUobWludXRlU3RlcCk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCJcclxuICAgICAgICAgICAgKGtleWRvd24uQXJyb3dEb3duKT1cImNoYW5nZU1pbnV0ZSgtbWludXRlU3RlcCk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCI+XHJcbiAgICAgICAgICA8YnV0dG9uICpuZ0lmPVwic3Bpbm5lcnNcIiB0YWJpbmRleD1cIi0xXCIgdHlwZT1cImJ1dHRvblwiIChjbGljayk9XCJjaGFuZ2VNaW51dGUoLW1pbnV0ZVN0ZXApXCJcclxuICAgICAgICAgICAgY2xhc3M9XCJidG4gYnRuLWxpbmtcIiBbY2xhc3MuYnRuLXNtXT1cImlzU21hbGxTaXplXCIgW2NsYXNzLmJ0bi1sZ109XCJpc0xhcmdlU2l6ZVwiICBbY2xhc3MuZGlzYWJsZWRdPVwiZGlzYWJsZWRcIlxyXG4gICAgICAgICAgICBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJjaGV2cm9uIG5nYi10cC1jaGV2cm9uIGJvdHRvbVwiPjwvc3Bhbj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJzci1vbmx5XCIgIGkxOG49XCJAQG5nYi50aW1lcGlja2VyLmRlY3JlbWVudC1taW51dGVzXCI+RGVjcmVtZW50IG1pbnV0ZXM8L3NwYW4+XHJcbiAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8ZGl2ICpuZ0lmPVwic2Vjb25kc1wiIGNsYXNzPVwibmdiLXRwLXNwYWNlclwiPjo8L2Rpdj5cclxuICAgICAgICA8ZGl2ICpuZ0lmPVwic2Vjb25kc1wiIGNsYXNzPVwibmdiLXRwLWlucHV0LWNvbnRhaW5lciBuZ2ItdHAtc2Vjb25kXCI+XHJcbiAgICAgICAgICA8YnV0dG9uICpuZ0lmPVwic3Bpbm5lcnNcIiB0YWJpbmRleD1cIi0xXCIgdHlwZT1cImJ1dHRvblwiIChjbGljayk9XCJjaGFuZ2VTZWNvbmQoc2Vjb25kU3RlcClcIlxyXG4gICAgICAgICAgICBjbGFzcz1cImJ0biBidG4tbGlua1wiIFtjbGFzcy5idG4tc21dPVwiaXNTbWFsbFNpemVcIiBbY2xhc3MuYnRuLWxnXT1cImlzTGFyZ2VTaXplXCIgW2NsYXNzLmRpc2FibGVkXT1cImRpc2FibGVkXCJcclxuICAgICAgICAgICAgW2Rpc2FibGVkXT1cImRpc2FibGVkXCI+XHJcbiAgICAgICAgICAgIDxzcGFuIGNsYXNzPVwiY2hldnJvbiBuZ2ItdHAtY2hldnJvblwiPjwvc3Bhbj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJzci1vbmx5XCIgaTE4bj1cIkBAbmdiLnRpbWVwaWNrZXIuaW5jcmVtZW50LXNlY29uZHNcIj5JbmNyZW1lbnQgc2Vjb25kczwvc3Bhbj5cclxuICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgPGlucHV0IHR5cGU9XCJ0ZXh0XCIgY2xhc3M9XCJuZ2ItdHAtaW5wdXQgZm9ybS1jb250cm9sXCIgW2NsYXNzLmZvcm0tY29udHJvbC1zbV09XCJpc1NtYWxsU2l6ZVwiIFtjbGFzcy5mb3JtLWNvbnRyb2wtbGddPVwiaXNMYXJnZVNpemVcIlxyXG4gICAgICAgICAgICBtYXhsZW5ndGg9XCIyXCIgaW5wdXRtb2RlPVwibnVtZXJpY1wiIHBsYWNlaG9sZGVyPVwiU1NcIiBpMThuLXBsYWNlaG9sZGVyPVwiQEBuZ2IudGltZXBpY2tlci5TU1wiXHJcbiAgICAgICAgICAgIFt2YWx1ZV09XCJmb3JtYXRNaW5TZWMobW9kZWw/LnNlY29uZClcIiAoY2hhbmdlKT1cInVwZGF0ZVNlY29uZCgkYW55KCRldmVudCkudGFyZ2V0LnZhbHVlKVwiXHJcbiAgICAgICAgICAgIFtyZWFkT25seV09XCJyZWFkb25seUlucHV0c1wiIFtkaXNhYmxlZF09XCJkaXNhYmxlZFwiIGFyaWEtbGFiZWw9XCJTZWNvbmRzXCIgaTE4bi1hcmlhLWxhYmVsPVwiQEBuZ2IudGltZXBpY2tlci5zZWNvbmRzXCJcclxuICAgICAgICAgICAgKGJsdXIpPVwiaGFuZGxlQmx1cigpXCJcclxuICAgICAgICAgICAgKGlucHV0KT1cImZvcm1hdElucHV0KCRhbnkoJGV2ZW50KS50YXJnZXQpXCJcclxuICAgICAgICAgICAgKGtleWRvd24uQXJyb3dVcCk9XCJjaGFuZ2VTZWNvbmQoc2Vjb25kU3RlcCk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCJcclxuICAgICAgICAgICAgKGtleWRvd24uQXJyb3dEb3duKT1cImNoYW5nZVNlY29uZCgtc2Vjb25kU3RlcCk7ICRldmVudC5wcmV2ZW50RGVmYXVsdCgpXCI+XHJcbiAgICAgICAgICA8YnV0dG9uICpuZ0lmPVwic3Bpbm5lcnNcIiB0YWJpbmRleD1cIi0xXCIgdHlwZT1cImJ1dHRvblwiIChjbGljayk9XCJjaGFuZ2VTZWNvbmQoLXNlY29uZFN0ZXApXCJcclxuICAgICAgICAgICAgY2xhc3M9XCJidG4gYnRuLWxpbmtcIiBbY2xhc3MuYnRuLXNtXT1cImlzU21hbGxTaXplXCIgW2NsYXNzLmJ0bi1sZ109XCJpc0xhcmdlU2l6ZVwiICBbY2xhc3MuZGlzYWJsZWRdPVwiZGlzYWJsZWRcIlxyXG4gICAgICAgICAgICBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJjaGV2cm9uIG5nYi10cC1jaGV2cm9uIGJvdHRvbVwiPjwvc3Bhbj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3M9XCJzci1vbmx5XCIgaTE4bj1cIkBAbmdiLnRpbWVwaWNrZXIuZGVjcmVtZW50LXNlY29uZHNcIj5EZWNyZW1lbnQgc2Vjb25kczwvc3Bhbj5cclxuICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDxkaXYgKm5nSWY9XCJtZXJpZGlhblwiIGNsYXNzPVwibmdiLXRwLXNwYWNlclwiPjwvZGl2PlxyXG4gICAgICAgIDxkaXYgKm5nSWY9XCJtZXJpZGlhblwiIGNsYXNzPVwibmdiLXRwLW1lcmlkaWFuXCI+XHJcbiAgICAgICAgICA8YnV0dG9uIHR5cGU9XCJidXR0b25cIiBjbGFzcz1cImJ0biBidG4tb3V0bGluZS1wcmltYXJ5XCIgW2NsYXNzLmJ0bi1zbV09XCJpc1NtYWxsU2l6ZVwiIFtjbGFzcy5idG4tbGddPVwiaXNMYXJnZVNpemVcIlxyXG4gICAgICAgICAgICBbZGlzYWJsZWRdPVwiZGlzYWJsZWRcIiBbY2xhc3MuZGlzYWJsZWRdPVwiZGlzYWJsZWRcIlxyXG4gICAgICAgICAgICAgICAgICAoY2xpY2spPVwidG9nZ2xlTWVyaWRpYW4oKVwiPlxyXG4gICAgICAgICAgICA8bmctY29udGFpbmVyICpuZ0lmPVwibW9kZWwgJiYgbW9kZWwuaG91ciA+PSAxMjsgZWxzZSBhbVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgaTE4bj1cIkBAbmdiLnRpbWVwaWNrZXIuUE1cIj57eyBpMThuLmdldEFmdGVybm9vblBlcmlvZCgpIH19PC9uZy1jb250YWluZXI+XHJcbiAgICAgICAgICAgIDxuZy10ZW1wbGF0ZSAjYW0gaTE4bj1cIkBAbmdiLnRpbWVwaWNrZXIuQU1cIj57eyBpMThuLmdldE1vcm5pbmdQZXJpb2QoKSB9fTwvbmctdGVtcGxhdGU+XHJcbiAgICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgPC9kaXY+XHJcbiAgICA8L2ZpZWxkc2V0PlxyXG4gIGAsXHJcbiAgcHJvdmlkZXJzOiBbe3Byb3ZpZGU6IE5HX1ZBTFVFX0FDQ0VTU09SLCB1c2VFeGlzdGluZzogZm9yd2FyZFJlZigoKSA9PiBOZ2JUaW1lcGlja2VyKSwgbXVsdGk6IHRydWV9XVxyXG59KVxyXG5leHBvcnQgY2xhc3MgTmdiVGltZXBpY2tlciBpbXBsZW1lbnRzIENvbnRyb2xWYWx1ZUFjY2Vzc29yLFxyXG4gICAgT25DaGFuZ2VzIHtcclxuICBzdGF0aWMgbmdBY2NlcHRJbnB1dFR5cGVfc2l6ZTogc3RyaW5nO1xyXG5cclxuICBkaXNhYmxlZDogYm9vbGVhbjtcclxuICBtb2RlbDogTmdiVGltZTtcclxuXHJcbiAgcHJpdmF0ZSBfaG91clN0ZXA6IG51bWJlcjtcclxuICBwcml2YXRlIF9taW51dGVTdGVwOiBudW1iZXI7XHJcbiAgcHJpdmF0ZSBfc2Vjb25kU3RlcDogbnVtYmVyO1xyXG5cclxuICAvKipcclxuICAgKiBXaGV0aGVyIHRvIGRpc3BsYXkgMTJIIG9yIDI0SCBtb2RlLlxyXG4gICAqL1xyXG4gIEBJbnB1dCgpIG1lcmlkaWFuOiBib29sZWFuO1xyXG5cclxuICAvKipcclxuICAgKiBJZiBgdHJ1ZWAsIHRoZSBzcGlubmVycyBhYm92ZSBhbmQgYmVsb3cgaW5wdXRzIGFyZSB2aXNpYmxlLlxyXG4gICAqL1xyXG4gIEBJbnB1dCgpIHNwaW5uZXJzOiBib29sZWFuO1xyXG5cclxuICAvKipcclxuICAgKiBJZiBgdHJ1ZWAsIGl0IGlzIHBvc3NpYmxlIHRvIHNlbGVjdCBzZWNvbmRzLlxyXG4gICAqL1xyXG4gIEBJbnB1dCgpIHNlY29uZHM6IGJvb2xlYW47XHJcblxyXG4gIC8qKlxyXG4gICAqIFRoZSBudW1iZXIgb2YgaG91cnMgdG8gYWRkL3N1YnRyYWN0IHdoZW4gY2xpY2tpbmcgaG91ciBzcGlubmVycy5cclxuICAgKi9cclxuICBASW5wdXQoKVxyXG4gIHNldCBob3VyU3RlcChzdGVwOiBudW1iZXIpIHtcclxuICAgIHRoaXMuX2hvdXJTdGVwID0gaXNJbnRlZ2VyKHN0ZXApID8gc3RlcCA6IHRoaXMuX2NvbmZpZy5ob3VyU3RlcDtcclxuICB9XHJcblxyXG4gIGdldCBob3VyU3RlcCgpOiBudW1iZXIgeyByZXR1cm4gdGhpcy5faG91clN0ZXA7IH1cclxuXHJcbiAgLyoqXHJcbiAgICogVGhlIG51bWJlciBvZiBtaW51dGVzIHRvIGFkZC9zdWJ0cmFjdCB3aGVuIGNsaWNraW5nIG1pbnV0ZSBzcGlubmVycy5cclxuICAgKi9cclxuICBASW5wdXQoKVxyXG4gIHNldCBtaW51dGVTdGVwKHN0ZXA6IG51bWJlcikge1xyXG4gICAgdGhpcy5fbWludXRlU3RlcCA9IGlzSW50ZWdlcihzdGVwKSA/IHN0ZXAgOiB0aGlzLl9jb25maWcubWludXRlU3RlcDtcclxuICB9XHJcblxyXG4gIGdldCBtaW51dGVTdGVwKCk6IG51bWJlciB7IHJldHVybiB0aGlzLl9taW51dGVTdGVwOyB9XHJcblxyXG4gIC8qKlxyXG4gICAqIFRoZSBudW1iZXIgb2Ygc2Vjb25kcyB0byBhZGQvc3VidHJhY3Qgd2hlbiBjbGlja2luZyBzZWNvbmQgc3Bpbm5lcnMuXHJcbiAgICovXHJcbiAgQElucHV0KClcclxuICBzZXQgc2Vjb25kU3RlcChzdGVwOiBudW1iZXIpIHtcclxuICAgIHRoaXMuX3NlY29uZFN0ZXAgPSBpc0ludGVnZXIoc3RlcCkgPyBzdGVwIDogdGhpcy5fY29uZmlnLnNlY29uZFN0ZXA7XHJcbiAgfVxyXG5cclxuICBnZXQgc2Vjb25kU3RlcCgpOiBudW1iZXIgeyByZXR1cm4gdGhpcy5fc2Vjb25kU3RlcDsgfVxyXG5cclxuICAvKipcclxuICAgKiBJZiBgdHJ1ZWAsIHRoZSB0aW1lcGlja2VyIGlzIHJlYWRvbmx5IGFuZCBjYW4ndCBiZSBjaGFuZ2VkLlxyXG4gICAqL1xyXG4gIEBJbnB1dCgpIHJlYWRvbmx5SW5wdXRzOiBib29sZWFuO1xyXG5cclxuICAvKipcclxuICAgKiBUaGUgc2l6ZSBvZiBpbnB1dHMgYW5kIGJ1dHRvbnMuXHJcbiAgICovXHJcbiAgQElucHV0KCkgc2l6ZTogJ3NtYWxsJyB8ICdtZWRpdW0nIHwgJ2xhcmdlJztcclxuXHJcbiAgY29uc3RydWN0b3IoXHJcbiAgICAgIHByaXZhdGUgcmVhZG9ubHkgX2NvbmZpZzogTmdiVGltZXBpY2tlckNvbmZpZywgcHJpdmF0ZSBfbmdiVGltZUFkYXB0ZXI6IE5nYlRpbWVBZGFwdGVyPGFueT4sXHJcbiAgICAgIHByaXZhdGUgX2NkOiBDaGFuZ2VEZXRlY3RvclJlZiwgcHVibGljIGkxOG46IE5nYlRpbWVwaWNrZXJJMThuKSB7XHJcbiAgICB0aGlzLm1lcmlkaWFuID0gX2NvbmZpZy5tZXJpZGlhbjtcclxuICAgIHRoaXMuc3Bpbm5lcnMgPSBfY29uZmlnLnNwaW5uZXJzO1xyXG4gICAgdGhpcy5zZWNvbmRzID0gX2NvbmZpZy5zZWNvbmRzO1xyXG4gICAgdGhpcy5ob3VyU3RlcCA9IF9jb25maWcuaG91clN0ZXA7XHJcbiAgICB0aGlzLm1pbnV0ZVN0ZXAgPSBfY29uZmlnLm1pbnV0ZVN0ZXA7XHJcbiAgICB0aGlzLnNlY29uZFN0ZXAgPSBfY29uZmlnLnNlY29uZFN0ZXA7XHJcbiAgICB0aGlzLmRpc2FibGVkID0gX2NvbmZpZy5kaXNhYmxlZDtcclxuICAgIHRoaXMucmVhZG9ubHlJbnB1dHMgPSBfY29uZmlnLnJlYWRvbmx5SW5wdXRzO1xyXG4gICAgdGhpcy5zaXplID0gX2NvbmZpZy5zaXplO1xyXG4gIH1cclxuXHJcbiAgb25DaGFuZ2UgPSAoXzogYW55KSA9PiB7fTtcclxuICBvblRvdWNoZWQgPSAoKSA9PiB7fTtcclxuXHJcbiAgd3JpdGVWYWx1ZSh2YWx1ZSkge1xyXG4gICAgY29uc3Qgc3RydWN0VmFsdWUgPSB0aGlzLl9uZ2JUaW1lQWRhcHRlci5mcm9tTW9kZWwodmFsdWUpO1xyXG4gICAgdGhpcy5tb2RlbCA9IHN0cnVjdFZhbHVlID8gbmV3IE5nYlRpbWUoc3RydWN0VmFsdWUuaG91ciwgc3RydWN0VmFsdWUubWludXRlLCBzdHJ1Y3RWYWx1ZS5zZWNvbmQpIDogbmV3IE5nYlRpbWUoKTtcclxuICAgIGlmICghdGhpcy5zZWNvbmRzICYmICghc3RydWN0VmFsdWUgfHwgIWlzTnVtYmVyKHN0cnVjdFZhbHVlLnNlY29uZCkpKSB7XHJcbiAgICAgIHRoaXMubW9kZWwuc2Vjb25kID0gMDtcclxuICAgIH1cclxuICAgIHRoaXMuX2NkLm1hcmtGb3JDaGVjaygpO1xyXG4gIH1cclxuXHJcbiAgcmVnaXN0ZXJPbkNoYW5nZShmbjogKHZhbHVlOiBhbnkpID0+IGFueSk6IHZvaWQgeyB0aGlzLm9uQ2hhbmdlID0gZm47IH1cclxuXHJcbiAgcmVnaXN0ZXJPblRvdWNoZWQoZm46ICgpID0+IGFueSk6IHZvaWQgeyB0aGlzLm9uVG91Y2hlZCA9IGZuOyB9XHJcblxyXG4gIHNldERpc2FibGVkU3RhdGUoaXNEaXNhYmxlZDogYm9vbGVhbikgeyB0aGlzLmRpc2FibGVkID0gaXNEaXNhYmxlZDsgfVxyXG5cclxuICBjaGFuZ2VIb3VyKHN0ZXA6IG51bWJlcikge1xyXG4gICAgdGhpcy5tb2RlbC5jaGFuZ2VIb3VyKHN0ZXApO1xyXG4gICAgdGhpcy5wcm9wYWdhdGVNb2RlbENoYW5nZSgpO1xyXG4gIH1cclxuXHJcbiAgY2hhbmdlTWludXRlKHN0ZXA6IG51bWJlcikge1xyXG4gICAgdGhpcy5tb2RlbC5jaGFuZ2VNaW51dGUoc3RlcCk7XHJcbiAgICB0aGlzLnByb3BhZ2F0ZU1vZGVsQ2hhbmdlKCk7XHJcbiAgfVxyXG5cclxuICBjaGFuZ2VTZWNvbmQoc3RlcDogbnVtYmVyKSB7XHJcbiAgICB0aGlzLm1vZGVsLmNoYW5nZVNlY29uZChzdGVwKTtcclxuICAgIHRoaXMucHJvcGFnYXRlTW9kZWxDaGFuZ2UoKTtcclxuICB9XHJcblxyXG4gIHVwZGF0ZUhvdXIobmV3VmFsOiBzdHJpbmcpIHtcclxuICAgIGNvbnN0IGlzUE0gPSB0aGlzLm1vZGVsLmhvdXIgPj0gMTI7XHJcbiAgICBjb25zdCBlbnRlcmVkSG91ciA9IHRvSW50ZWdlcihuZXdWYWwpO1xyXG4gICAgaWYgKHRoaXMubWVyaWRpYW4gJiYgKGlzUE0gJiYgZW50ZXJlZEhvdXIgPCAxMiB8fCAhaXNQTSAmJiBlbnRlcmVkSG91ciA9PT0gMTIpKSB7XHJcbiAgICAgIHRoaXMubW9kZWwudXBkYXRlSG91cihlbnRlcmVkSG91ciArIDEyKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIHRoaXMubW9kZWwudXBkYXRlSG91cihlbnRlcmVkSG91cik7XHJcbiAgICB9XHJcbiAgICB0aGlzLnByb3BhZ2F0ZU1vZGVsQ2hhbmdlKCk7XHJcbiAgfVxyXG5cclxuICB1cGRhdGVNaW51dGUobmV3VmFsOiBzdHJpbmcpIHtcclxuICAgIHRoaXMubW9kZWwudXBkYXRlTWludXRlKHRvSW50ZWdlcihuZXdWYWwpKTtcclxuICAgIHRoaXMucHJvcGFnYXRlTW9kZWxDaGFuZ2UoKTtcclxuICB9XHJcblxyXG4gIHVwZGF0ZVNlY29uZChuZXdWYWw6IHN0cmluZykge1xyXG4gICAgdGhpcy5tb2RlbC51cGRhdGVTZWNvbmQodG9JbnRlZ2VyKG5ld1ZhbCkpO1xyXG4gICAgdGhpcy5wcm9wYWdhdGVNb2RlbENoYW5nZSgpO1xyXG4gIH1cclxuXHJcbiAgdG9nZ2xlTWVyaWRpYW4oKSB7XHJcbiAgICBpZiAodGhpcy5tZXJpZGlhbikge1xyXG4gICAgICB0aGlzLmNoYW5nZUhvdXIoMTIpO1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgZm9ybWF0SW5wdXQoaW5wdXQ6IEhUTUxJbnB1dEVsZW1lbnQpIHsgaW5wdXQudmFsdWUgPSBpbnB1dC52YWx1ZS5yZXBsYWNlKEZJTFRFUl9SRUdFWCwgJycpOyB9XHJcblxyXG4gIGZvcm1hdEhvdXIodmFsdWU/OiBudW1iZXIpIHtcclxuICAgIGlmIChpc051bWJlcih2YWx1ZSkpIHtcclxuICAgICAgaWYgKHRoaXMubWVyaWRpYW4pIHtcclxuICAgICAgICByZXR1cm4gcGFkTnVtYmVyKHZhbHVlICUgMTIgPT09IDAgPyAxMiA6IHZhbHVlICUgMTIpO1xyXG4gICAgICB9IGVsc2Uge1xyXG4gICAgICAgIHJldHVybiBwYWROdW1iZXIodmFsdWUgJSAyNCk7XHJcbiAgICAgIH1cclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIHJldHVybiBwYWROdW1iZXIoTmFOKTtcclxuICAgIH1cclxuICB9XHJcblxyXG4gIGZvcm1hdE1pblNlYyh2YWx1ZT86IG51bWJlcikgeyByZXR1cm4gcGFkTnVtYmVyKGlzTnVtYmVyKHZhbHVlKSA/IHZhbHVlIDogTmFOKTsgfVxyXG5cclxuICBoYW5kbGVCbHVyKCkgeyB0aGlzLm9uVG91Y2hlZCgpOyB9XHJcblxyXG4gIGdldCBpc1NtYWxsU2l6ZSgpOiBib29sZWFuIHsgcmV0dXJuIHRoaXMuc2l6ZSA9PT0gJ3NtYWxsJzsgfVxyXG5cclxuICBnZXQgaXNMYXJnZVNpemUoKTogYm9vbGVhbiB7IHJldHVybiB0aGlzLnNpemUgPT09ICdsYXJnZSc7IH1cclxuXHJcbiAgbmdPbkNoYW5nZXMoY2hhbmdlczogU2ltcGxlQ2hhbmdlcyk6IHZvaWQge1xyXG4gICAgaWYgKGNoYW5nZXNbJ3NlY29uZHMnXSAmJiAhdGhpcy5zZWNvbmRzICYmIHRoaXMubW9kZWwgJiYgIWlzTnVtYmVyKHRoaXMubW9kZWwuc2Vjb25kKSkge1xyXG4gICAgICB0aGlzLm1vZGVsLnNlY29uZCA9IDA7XHJcbiAgICAgIHRoaXMucHJvcGFnYXRlTW9kZWxDaGFuZ2UoZmFsc2UpO1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgcHJpdmF0ZSBwcm9wYWdhdGVNb2RlbENoYW5nZSh0b3VjaGVkID0gdHJ1ZSkge1xyXG4gICAgaWYgKHRvdWNoZWQpIHtcclxuICAgICAgdGhpcy5vblRvdWNoZWQoKTtcclxuICAgIH1cclxuICAgIGlmICh0aGlzLm1vZGVsLmlzVmFsaWQodGhpcy5zZWNvbmRzKSkge1xyXG4gICAgICB0aGlzLm9uQ2hhbmdlKFxyXG4gICAgICAgICAgdGhpcy5fbmdiVGltZUFkYXB0ZXIudG9Nb2RlbCh7aG91cjogdGhpcy5tb2RlbC5ob3VyLCBtaW51dGU6IHRoaXMubW9kZWwubWludXRlLCBzZWNvbmQ6IHRoaXMubW9kZWwuc2Vjb25kfSkpO1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgdGhpcy5vbkNoYW5nZSh0aGlzLl9uZ2JUaW1lQWRhcHRlci50b01vZGVsKG51bGwpKTtcclxuICAgIH1cclxuICB9XHJcbn1cclxuIl19
