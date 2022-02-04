@@ -1,0 +1,9 @@
+.content .row{
+  flex-wrap: inherit !important;
+}
+.button_width_inherit{
+  width: inherit;
+}
+tr.change_on_over:hover td  { background: rgba(237, 237, 237, 0.6)
+}
+

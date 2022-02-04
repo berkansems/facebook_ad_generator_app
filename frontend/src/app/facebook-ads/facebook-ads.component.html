@@ -1,0 +1,326 @@
+<div class="row" >
+
+  <div class="col-md-4 col-12 mt-1">
+    <button class="btn btn-outline-primary btns button_width_inherit" name="campaigns"
+            [ngClass]="{'active' : show_campaign_tab === true }" (click)="getCampaigns()">
+      <img src="https://img.icons8.com/carbon-copy/25/000000/facebook-new.png"/> Campaigns
+    </button>
+
+  </div>
+  <div class="col-md-4 col-12 mt-1">
+    <button class="btn btn-outline-primary btns button_width_inherit"
+            [ngClass]="{'active' : show_adsets_tab === true }" (click)="getAdsets()">
+      <img src="https://img.icons8.com/carbon-copy/25/000000/bookmark--v1.png"/> Adsets
+    </button>
+
+  </div>
+  <div class="col-md-4 col-12 mt-1">
+    <button class="btn btn-outline-primary btns button_width_inherit"
+            [ngClass]="{'active' : show_ads_tab === true }" (click)="getAds()">
+      <img src="https://img.icons8.com/external-icongeek26-outline-icongeek26/25/000000/external-ads-ads-icongeek26-outline-icongeek26-8.png"/> Ads
+    </button>
+
+  </div>
+
+  <div class="col-12 mt-5">
+    <div *ngIf="show_campaign_tab" class="row">
+
+      <div class="col-md-8 col-12" style="border-right: 2px solid gray; min-height: 500px">
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">CAMPAIGN ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">OBJECTIVE</th>
+            <th scope="col">SEE INSIGHTS</th>
+            <th scope="col">SHOW ADSETS</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let campaign of campaign_list; index as i" class="change_on_over">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ campaign.id }}</td>
+            <td>{{ campaign.name }}</td>
+            <td>{{ campaign.objective }}</td>
+            <td><button class="btn btn-success" (click)="getCampaignInsights(campaign.id)">Insights</button></td>
+            <td><button class="btn btn-info" (click)="getcampaignAdsets(campaign.id)">Show Adsets</button></td>
+          </tr>
+          </tbody>
+
+        </table>
+        <div class="mt-2" style="color: red; font-weight: 700">{{campaign_message}}</div>
+
+      </div>
+      <div class="col-md-4 col-12" >
+        <form>
+          <div class="form-group" style="display: grid">
+            <label for="campaignName">Campaign Name *</label>
+            <input [(ngModel)]="campaign_name"  required ngModel name="campaignName" id="campaignName" #campaignName="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!campaignName.valid && campaignName.touched">Campaign Name Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+
+            <label for="campaignObjective">Campaign Objective *</label>
+            <select name="campaignObjective" id="campaignObjective" [(ngModel)]="campaign_objective"
+                    class="form-control">
+              <option *ngFor="let objective of objective_chioces" [value]="objective">
+                {{objective}}
+              </option>
+
+            </select>
+          </div>
+          <button (click)="create_compaign()" class="btn btn-primary" >Create Campaign</button>
+        </form>
+
+
+      </div>
+    </div>
+    <div *ngIf="show_adsets_tab" class="row">
+
+      <div class="col-md-8 col-12" style="border-right: 2px solid gray; min-height: 500px">
+        <div *ngIf="showAdsetComment">From campaign table select one to see its adsets</div>
+        <div *ngIf="!showAdsetComment">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">ADSET ID</th>
+              <th scope="col">NAME</th>
+              <th scope="col">START TIME</th>
+              <th scope="col">END TIME</th>
+              <th scope="col">BID AMOUNT</th>
+              <th scope="col">LIFETIME BUDGET</th>
+              <th scope="col">SHOW ADS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let adset of campaign_adsets_list; index as i" class="change_on_over">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ adset.id }}</td>
+              <td>{{ adset.name }}</td>
+              <td>{{ adset.start_time| date:'short' }}</td>
+              <td>{{ adset.end_time | date:'short'}}</td>
+              <td>{{ adset.bid_amount }}</td>
+              <td>{{ adset.lifetime_budget }}</td>
+              <td><button class="btn btn-info" (click)="getAdsofAdset(adset.id)">Ads</button></td>
+
+            </tr>
+            </tbody>
+
+          </table>
+          <div class="mt-2" style="color: red; font-weight: 700">{{campaign_adset_message}}</div>
+        </div>
+
+
+      </div>
+      <div class="col-md-4 col-12" >
+        <form>
+          <div class="form-group" style="display: grid">
+            <label for="adsetName">Adset Name *</label>
+            <input [(ngModel)]="adset_name"  required ngModel name="adsetName" id="adsetName" #adsetName="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!adsetName.valid && adsetName.touched">Adset Name Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+
+            <label for="AdsetCampaignId">Campaign *</label>
+            <select name="AdsetCampaignId" id="AdsetCampaignId" [(ngModel)]="adset_campaign_id"
+                    class="form-control">
+
+              <option *ngFor="let campaign of campaign_list" [value]="campaign.id">
+                {{campaign.name}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group" style="display: grid">
+            <label for="dailyBudget">Daily Budget *</label>
+            <input type="number" [(ngModel)]="daily_budget" required ngModel name="dailyBudget" id="dailyBudget" #dailyBudget="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!dailyBudget.valid && dailyBudget.touched">Daily Budget Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="publishingDays">Publishing Days *</label>
+            <input type="number" [(ngModel)]="publishing_days" required ngModel name="publishingDays" id="publishingDays" #publishingDays="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!publishingDays.valid && publishingDays.touched">Publishing Days Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="bidAmount">Bid Amount *</label>
+            <input  type="number" [(ngModel)]="bid_amount" required ngModel name="bidAmount" id="bidAmount" #bidAmount="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!bidAmount.valid && bidAmount.touched">Bid Amount Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="adsetCurrency">Currency *</label>
+            <select name="adsetCurrency" id="adsetCurrency" [(ngModel)]="currency"
+                    class="form-control">
+              <option *ngFor="let cur of currency_choices" [value]="cur">
+                {{cur}}
+              </option>
+
+            </select>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="billingEvent">Billing Event *</label>
+
+            <select name="billingEvent" id="billingEvent" [(ngModel)]="billing_event"
+                    class="form-control">
+              <option *ngFor="let bill of billing_events_choices" [value]="bill">
+                {{bill}}
+              </option>
+
+            </select>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="optimizationGoal">Optimization Goal *</label>
+
+            <select name="optimizationGoal" id="optimizationGoal" [(ngModel)]="optimization_goal"
+                    class="form-control">
+              <option *ngFor="let goal of optimization_goals_choices" [value]="goal">
+                {{goal}}
+              </option>
+
+            </select>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="maximumAge">Maximum age *</label>
+            <input [min]="13" [max]="65" type="number" [(ngModel)]="age_max" required ngModel name="maximumAge" id="maximumAge" #ageMax="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!ageMax.valid && ageMax.touched">Max. age Is 65 and Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="minimumAge">Minimum Age *</label>
+            <input [min]="13" [max]="65" type="number" [(ngModel)]="age_min" required ngModel name="minimumAge" id="minimumAge" #ageMin="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!ageMin.valid && ageMin.touched">Min. Age Is 13 and Required!</div>
+          </div>
+
+          <button (click)="create_adsets()" class="btn btn-primary" >Create Adset</button>
+        </form>
+
+      </div>
+    </div>
+    <div *ngIf="show_ads_tab" class="row">
+      <div class="col-md-8 col-12" style="border-right: 2px solid gray; min-height: 500px">
+        <div *ngIf="showAdsComment">From Adsets table select one to see its ads</div>
+        <div *ngIf="!showAdsComment">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">AD ID</th>
+              <th scope="col">NAME</th>
+              <th scope="col">CREATIVE ID</th>
+              <th scope="col">CONFIGURED STATUS</th>
+              <th scope="col">EFFECTIVE STATUS</th>
+              <th scope="col">SHOW</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ad of adsets_ads_list; index as i" class="change_on_over">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ ad.ad_id }}</td>
+              <td>{{ ad.ad_name }}</td>
+              <td>{{ ad.ad_creative_id}}</td>
+              <td>{{ ad.ad_configured_status}}</td>
+              <td>{{ ad.ad_effective_status }}</td>
+              <td><button class="btn btn-info" (click)="adPreview(ad.ad_id,ad.ad_creative_id)">Show Ad</button></td>
+
+            </tr>
+            </tbody>
+
+          </table>
+          <div *ngIf="show_iframe" style="margin: 20px auto; text-align: center">
+            Click <a target="_blank" href="{{iframe_url }}" >HERE</a> to see the ad individually.
+            <hr>
+            <iframe [src]="iframe_url | safe" style="padding: 15px; border-radius: 10px;width: 540px; height: 690px;
+             box-shadow: 0 7px 38px rgb(0 0 0 / 80%), 0 4px 11px rgb(0 0 0 / 40%);border: 1px solid gray;"></iframe>
+
+          </div>
+
+
+        </div>
+        <div class="mt-2" style="color: red; font-weight: 700">{{adsets_ads_message}}</div>
+      </div>
+      <div class="col-md-4 col-12" >
+        <form>
+          <div class="form-group" style="display: grid">
+            <label for="adName">Ad Name *</label>
+            <input [(ngModel)]="ad_name"  required ngModel name="adName" id="adName" #adName="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!adName.valid && adName.touched">Ad Name Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="adCreativeName">Creative Message *</label>
+            <input [(ngModel)]="ad_creative_name"  required ngModel name="adCreativeName" id="adCreativeName" #adCreativeName="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!adCreativeName.valid && adCreativeName.touched">Creative Message Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="imageUrl">Image Url *</label>
+            <input [(ngModel)]="image_url"  required ngModel name="imageUrl" id="imageUrl" #imageUrl="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!imageUrl.valid && imageUrl.touched">Image Url Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="adsLink">Ad Link *</label>
+            <input [(ngModel)]="ad_link"  required ngModel name="adsLink" id="adsLink" #adsLink="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!adsLink.valid && adsLink.touched">Ad Link Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="pageId">Page Id *</label>
+            <input type="number" [(ngModel)]="page_id"  required ngModel name="pageId" id="pageId" #pageId="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!pageId.valid && pageId.touched">Page ID Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="postId">Post Id *</label>
+            <input [min]="10" type="number" [(ngModel)]="post_id"  required ngModel name="postId" id="postId" #postId="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!postId.valid && postId.touched">Post Id should have min. 10 characters and required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="adAdsetId">Adset Id *</label>
+            <input  type="number" [(ngModel)]="ad_adset_id"  required ngModel name="adAdsetId" id="adAdsetId" #adAdsetId="ngModel" >
+            <div class="alert alert-danger mt-1" *ngIf="!adAdsetId.valid && adAdsetId.touched">Adset Id Is Required!</div>
+          </div>
+          <div class="form-group" style="display: grid">
+            <label for="adStatus">Status *</label>
+
+            <select name="adStatus" id="adStatus" [(ngModel)]="ad_status"
+                    class="form-control">
+              <option *ngFor="let status of status_choices" [value]="status">
+                {{status}}
+              </option>
+
+            </select>
+          </div>
+          <button (click)="create_ad()" class="btn btn-primary" >Create Ad</button>
+
+
+
+        </form>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
+<ng-template #notify let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" style="margin-top: 0px;">{{modal.title}}</h4>
+  </div>
+  <div class="modal-body">
+    <p style="text-align: center;font-size: 20px;">{{modal.body}}</p>
+    <button type="button" style="margin-left: 45%" [class]="modal.class" (click)="c('Ok')">Ok</button>
+  </div>
+</ng-template>
+<ng-template #notify let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" style="margin-top: 0px;">{{modal.title}}</h4>
+  </div>
+  <div class="modal-body">
+    <a href="{{modal.body}}" style="text-align: center;font-size: 12px;">{{modal.body}}</a>
+    <hr>
+    <button type="button" style="margin-left: 45%" [class]="modal.class" (click)="c('Ok')">Ok</button>
+  </div>
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
