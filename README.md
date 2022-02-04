@@ -9,6 +9,6 @@ you have to set your access_token app_id and other credentials in django setting
 
 docker-compose up --build
 
-you will be able to see the application on localhost/4200
+you will be able to see the application on http://127.0.0.1/4200
 ----------------------------------
 ![ad_final](https://user-images.githubusercontent.com/58864216/152434254-f93138b8-9828-49cb-a329-efaf1e8a6731.png)
